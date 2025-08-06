@@ -1,0 +1,19 @@
+body{
+  background-color: #eaeaea;
+}
+
+.backgrond-vermelho{
+  background-color: #ff0101;
+  height: 40vh;
+
+}
+
+.logo_senai{
+  margin-left: 50%;
+  margin-top: 10px;
+}
+
+.cards{
+  margin-left: 35%;
+  margin-top: 20px;
+}

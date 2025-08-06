@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.card {
+  width: 15.3rem; 
+  height: 55%;
+  border-radius: 20px;
+  border: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover{
+  transform: scale(1.02);
+}
+
+.card-prioridade {
+  background-color: #1800ad;
+  width: 100%;
+  border-radius: 20px 20px 0px 0 ;
+  padding: 3px 10px 1px 10px;
+  } 
+
+  .card-prioridade p{
+  background-color: #1800ad;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  color: #fff;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.card-prioridade1 {
+  background-color: #c7ae4a;
+  width: 100%;
+  border-radius: 20px 20px 0px 0 ;
+  padding: 3px 10px 1px 10px;
+}
+
+.card-prioridade1 p{
+  background-color: #c7ae4a;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  color: #fff;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.card-prioridade2 p{
+  background-color: #00bf63;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  color: #fff;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.card-prioridade2 {
+  background-color: #00bf63;
+  width: 100%;
+  border-radius: 20px 20px 0px 0 ;
+  padding: 3px 10px 1px 10px;
+}
+
+.card-titulo h3{
+  color: #931c1b;
+  font-size: 22px;
+}
+
+.card-patrimonio{
+  max-width: 98%;
+  width: 82%;
+}
+
+.card-patrimonio p{
+  color: #b80000;
+  background-color: #fff;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.card-descricao{
+  font-family: "Montserrat", sans-serif;
+  max-width: 85%;
+  padding-left: 10%;
+  align-items: center ;
+  justify-content: center;
+  display: flex;
+  margin-top: 3px;
+}
+
+.card-descricao p{
+  font-size: 14px;
+}
+
+.status-card{
+  margin-top:14px;
+  color: #931c1b;
+  font-size: 12px;
+}
+
+.MuiStepLabel-iconContainer{
+  background-image: url('../../../public/icon.png');
+  background-size: 200px;
+  background-position: -90px;
+  background-repeat: no-repeat;
+
+}
+
+.MuiStepLabel-iconContainer svg path{
+  display: none;
+}
+
+.MuiStepLabel-iconContainer circle{
+  display: none;
+}
+
+.MuiStepLabel-iconContainer svg .MuiStepIcon-text {
+  display: none;
+}
+
