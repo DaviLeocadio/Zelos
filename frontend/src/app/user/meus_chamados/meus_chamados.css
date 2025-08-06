@@ -2,10 +2,8 @@ body{
   background-color: #eaeaea;
 }
 
-.backgrond-vermelho{
-  background-color: #ff0101;
-  height: 40vh;
-
+.fundo{
+  width: 100%;
 }
 
 .logo_senai{
@@ -14,6 +12,11 @@ body{
 }
 
 .cards{
-  margin-left: 35%;
+  margin-left: 30%;
   margin-top: 20px;
+}
+
+h2{
+  margin-left: 30%;
+  margin-top: 3%;
 }
