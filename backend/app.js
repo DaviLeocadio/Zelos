@@ -3,6 +3,7 @@ import cors from 'cors';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import authRotas from './routes/authRotas.js';
+import chamadoRotas from './routes/chamadoRotas.js';
 import passport from './config/ldap.js';
 
 // 1. Carrega variáveis de ambiente PRIMEIRO
@@ -41,6 +42,7 @@ try {
 
 // 5. Rotas
 app.use('/auth', authRotas);
+app.use('/chamados', chamadoRotas)
 
 app.get('/api/equipamentos/filtrar', (req, res) => {
   const { query } = req.query;

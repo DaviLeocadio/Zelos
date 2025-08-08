@@ -1,7 +1,7 @@
 'use client'
-import Card from "@/components/card/card";
+import Card from "@/components/Card/card";
 import './style.css';
-import Progress from '@/components/progress-bar/progress-bar';
+import Progress from '@/components/Progress-bar/progress-bar';
 export default function Home() {
   return (
   <>

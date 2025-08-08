@@ -2,7 +2,7 @@ import { create, readAll, read, update, deleteRecord } from '../config/database.
 
 const listarChamados = async () => {
   try {
-    return await readAll('livros');
+    return await readAll('chamados');
   } catch (error) {
     console.error('Erro ao listar livros:', error);
     throw error;
@@ -18,7 +18,7 @@ const obterChamadoPorId = async (id) => {
   }
 };
 
-const criarLivro = async (livroData) => {
+const criarChamado = async (livroData) => {
   try {
     return await create('livros', livroData);
   } catch (error) {
@@ -27,7 +27,7 @@ const criarLivro = async (livroData) => {
   }
 };
 
-const atualizarLivro = async (id, livroData) => {
+const atualizarChamado = async (id, livroData) => {
   try {
     await update('livros', livroData, `id = ${id}`);
   } catch (error) {
@@ -36,7 +36,7 @@ const atualizarLivro = async (id, livroData) => {
   }
 };
 
-const excluirLivro = async (id) => {
+const excluirChamado = async (id) => {
   try {
     await deleteRecord('livros', `id = ${id}`);
   } catch (error) {
@@ -45,4 +45,4 @@ const excluirLivro = async (id) => {
   }
 };
 
-export { listarChamados, obterChamadoPorId, criarLivro, atualizarLivro, excluirLivro };
+export { listarChamados, obterChamadoPorId, criarChamado, atualizarChamado, excluirChamado };

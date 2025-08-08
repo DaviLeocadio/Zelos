@@ -6,6 +6,7 @@
   border-radius: 20px;
   border: 0;
   transition: all 0.2s ease-in-out;
+  margin-bottom: 20vh;
 }
 
 .card:hover{
@@ -61,17 +62,21 @@
 .card-titulo h3{
   color: #000;
   font-size: 22px;
+  font-weight: 700;
 }
 
 .card-patrimonio{
   max-width: 98%;
   width: 82%;
+  align-items: center;
+  justify-content: center;
+  display: grid;
 }
 
 .card-patrimonio p{
   color: #000;
   background-color: #fff;
-  font-size: 14px;
+  font-size: 15px;
   margin-bottom: 0;
   font-weight: 600;
 }
@@ -95,4 +100,13 @@
   margin-top:14px;
   color: #931c1b;
   font-size: 12px;
+}
+
+.chat{
+  margin-bottom: 10px;
+}
+
+.chat input{
+  border-radius: 15px;
+  padding: 5px;
 }
