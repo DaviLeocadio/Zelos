@@ -1,6 +1,6 @@
 import { create, readAll, read, update, deleteRecord } from '../config/database.js';
 
-const listarLivros = async () => {
+const listarChamados = async () => {
   try {
     return await readAll('livros');
   } catch (error) {
@@ -9,7 +9,7 @@ const listarLivros = async () => {
   }
 };
 
-const obterLivroPorId = async (id) => {
+const obterChamadoPorId = async (id) => {
   try {
     return await read('livros', `id = ${id}`);
   } catch (error) {
@@ -45,4 +45,4 @@ const excluirLivro = async (id) => {
   }
 };
 
-export { listarLivros, obterLivroPorId, criarLivro, atualizarLivro, excluirLivro };
+export { listarChamados, obterChamadoPorId, criarLivro, atualizarLivro, excluirLivro };

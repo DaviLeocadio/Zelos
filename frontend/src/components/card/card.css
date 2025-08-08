@@ -59,7 +59,7 @@
 }
 
 .card-titulo h3{
-  color: #931c1b;
+  color: #000;
   font-size: 22px;
 }
 
@@ -69,20 +69,22 @@
 }
 
 .card-patrimonio p{
-  color: #b80000;
+  color: #000;
   background-color: #fff;
   font-size: 14px;
   margin-bottom: 0;
+  font-weight: 600;
 }
 
 .card-descricao{
   font-family: "Montserrat", sans-serif;
   max-width: 85%;
-  padding-left: 10%;
+  padding-left: 12%;
   align-items: center ;
   justify-content: center;
   display: flex;
   margin-top: 3px;
+  
 }
 
 .card-descricao p{
@@ -94,24 +96,3 @@
   color: #931c1b;
   font-size: 12px;
 }
-
-.MuiStepLabel-iconContainer{
-  background-image: url('../../../public/icon.png');
-  background-size: 200px;
-  background-position: -90px;
-  background-repeat: no-repeat;
-
-}
-
-.MuiStepLabel-iconContainer svg path{
-  display: none;
-}
-
-.MuiStepLabel-iconContainer circle{
-  display: none;
-}
-
-.MuiStepLabel-iconContainer svg .MuiStepIcon-text {
-  display: none;
-}
-
