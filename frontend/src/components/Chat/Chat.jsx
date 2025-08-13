@@ -1,130 +1,153 @@
-import React from 'react';
-import styled from 'styled-components';
+'use client';
 
-const Card = () => {
+import { useState, useEffect } from 'react';
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+
+import './chat.css';
+
+export default function Chat() {
+  const [texto, setTexto] = useState('');
+  const [mensagens, setMensagens] = useState([]);
+  const [carregandoMensagens, setCarregandoMensagens] = useState(true);
+
+  const fimDasMensagensRef = (fim) => {
+    if (fim) {
+      fim.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const mensagensSalvas = localStorage.getItem('chatbot-mensagens');
+    if (mensagensSalvas) {
+      try {
+        setMensagens(JSON.parse(mensagensSalvas));
+      } catch {
+        setMensagens([
+          {
+            autor: 'gemini',
+            texto:
+              'Olá! Sou a Vika, sua assistente virtual da Clínica Vida Plena. Como posso te ajudar hoje?',
+          },
+        ]);
+      }
+    } else {
+      setMensagens([
+        {
+          autor: 'gemini',
+          texto:
+            'Olá! Sou a Vika, sua assistente virtual da Clínica Vida Plena. Como posso te ajudar hoje?',
+        },
+      ]);
+    }
+    setCarregandoMensagens(false);
+  }, []);
+
+  useEffect(() => {
+    if (!carregandoMensagens && typeof window !== 'undefined') {
+      localStorage.setItem('chatbot-mensagens', JSON.stringify(mensagens));
+    }
+  }, [mensagens, carregandoMensagens]);
+
+  async function enviarGemini() {
+    if (!texto.trim()) return;
+
+    const mensagemUsuario = { autor: 'user', texto };
+    setMensagens((anteriores) => [...anteriores, mensagemUsuario]);
+    setTexto('');
+
+    try {
+      const response = await fetch('http://localhost:3001/vika', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mensagem: texto,
+        }),
+      });
+
+      const data = await response.json();
+    } catch (error) {
+      console.error('Erro:', error);
+      setMensagens((anteriores) => [
+        ...anteriores,
+        { autor: 'gemini', texto: 'Erro ao enviar os dados.' },
+      ]);
+    }
+  }
+
+  if (carregandoMensagens) {
+    return;
+  }
+
   return (
-    <StyledWrapper>
-      <div className="chat-card">
-        <div className="chat-header">
-          <div className="h2">ChatGPT</div>
-        </div>
-        <div className="chat-body">
-          <div className="message incoming">
-            <p>Hello, how can I assist you today?</p>
+    <>
+      
+      
+        <div className="offcanvas-body d-flex flex-column p-0">
+          <div className="card-body flex-grow-1 overflow-auto">
+            <div className="card-container">
+              <div className="card-header sticky-top bg-white">
+                <div className="img-avatar">
+                  <img src="/imgChatBot/chat-icon.png" alt="" />
+                </div>
+                <div className="text-chat">Fale com a Vika</div>
+                <div className="bt-chat-div">
+                  <button
+                    type="button"
+                    className="btn-close fechar-chat"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                  ></button>
+                </div>
+              </div>
+              <div className="card-body">
+                <div className="messages-container">
+                  {mensagens.map((mensagem, chave) => (
+                    <div
+                      key={chave}
+                      className={`message-box ${
+                        mensagem.autor === 'user' ? 'right' : 'left'
+                      }`}
+                    >
+                      {mensagem.autor === 'gemini' ? (
+                        <div className="markdown">
+                          <ReactMarkdown>{mensagem.texto}</ReactMarkdown>
+                        </div>
+                      ) : (
+                        <p>{mensagem.texto}</p>
+                      )}
+                    </div>
+                  ))}
+                  <div ref={fimDasMensagensRef} />
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="message outgoing">
-            <p>I have a question about your services.</p>
-          </div>
-          <div className="message incoming">
-            <p>Sure, I'm here to help. What would you like to know?</p>
+          <div className="modal-footer d-flex border-top p-3">
+            <div className="d-flex w-100">
+              <input
+                type="text"
+                className="form-control input-nova-chat w-100"
+                placeholder="Digite sua mensagem..."
+                value={texto}
+                onChange={(e) => setTexto(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') enviarGemini();
+                }}
+                required
+              />
+              <button
+                className="btn btn-modal-chat ms-2"
+                onClick={enviarGemini}
+              >
+                <i className="bi bi-arrow-right"></i>
+              </button>
+            </div>
           </div>
         </div>
-        <div className="chat-footer">
-          <input placeholder="Type your message" type="text" />
-          <button>Send</button>
-        </div>
-      </div>
-    </StyledWrapper>
+      
+    </>
   );
 }
-
-const StyledWrapper = styled.div`
-  .chat-card {
-    width: 300px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-
-  .chat-header {
-    padding: 10px;
-    background-color: #f2f2f2;
-    display: flex;
-    align-items: center;
-  }
-
-  .chat-header .h2 {
-    font-size: 16px;
-    color: #333;
-  }
-
-  .chat-body {
-    padding: 20px;
-  }
-
-  .message {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-  }
-
-  .incoming {
-    background-color: #e1e1e1;
-  }
-
-  .outgoing {
-    background-color: #f2f2f2;
-    text-align: right;
-  }
-
-  .message p {
-    font-size: 14px;
-    color: #333;
-    margin: 0;
-  }
-
-  .chat-footer {
-    padding: 10px;
-    background-color: #f2f2f2;
-    display: flex;
-  }
-
-  .chat-footer input[type="text"] {
-    flex-grow: 1;
-    padding: 5px;
-    border: none;
-    border-radius: 3px;
-  }
-
-  .chat-footer button {
-    padding: 5px 10px;
-    border: none;
-    background-color: #4285f4;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  .chat-footer button:hover {
-    background-color: #0f9d58;
-  }
-
-  @keyframes chatAnimation {
-    0% {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .chat-card .message {
-    animation: chatAnimation 0.3s ease-in-out;
-    animation-fill-mode: both;
-    animation-delay: 0.1s;
-  }
-
-  .chat-card .message:nth-child(even) {
-    animation-delay: 0.2s;
-  }
-
-  .chat-card .message:nth-child(odd) {
-    animation-delay: 0.3s;
-  }`;
-
-export default Card;

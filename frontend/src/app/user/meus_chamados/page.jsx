@@ -1,4 +1,4 @@
-
+'use client';
 import "./meus_chamados.css";
 import Card from "@/components/Card/Card";
 

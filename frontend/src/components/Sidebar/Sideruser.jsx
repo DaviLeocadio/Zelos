@@ -1,6 +1,13 @@
 import './sideuser.css';
+
 import LogoutUser from '../LogoutUser/LogoutUser';
 
+const nomePerfil = 'Giulia Berraquero Ventre';
+const partes = nomePerfil.trim().split(' ');
+const iniciais =
+  partes[0].charAt(0).toUpperCase() +
+  partes[partes.length - 1].charAt(0).toUpperCase();
+const nomeExibido = `${partes[0]} ${partes[partes.length - 1]}`;
 
 export default function Sideuser() {
   return (
@@ -8,22 +15,40 @@ export default function Sideuser() {
       {/* Nav Computador */}
       <div className="d-none d-md-block">
         <aside className="sidebar">
-          <img
-            src="/logotipos/logoEscritaVermelha.png"
-            className="logo"
-            alt=""
-          />
+          <img src="/logotipos/logoEscritaBranca.png" className="logo" alt="" />
           <div className="sidebtns">
             <a href="">
               <button className="sidepage perfil">
-                <i className="bi bi-person-fill"></i>Perfil
+                <img
+                  src={`https://imageslot.com/v1/600x400?fg=e30615&shadow=23272f&fontsize=128&text=${iniciais}&filetype=png&bold=1`}
+                  className="img-perfil"
+                />
+                <span className="nome-perfil">{nomeExibido}</span>
               </button>
             </a>
-            <a href="">
-              <button className="sidepage chamados">
-                <i className="bi bi-gear-fill"></i>Chamados
+            <div className="dropdown chamados">
+              <button
+                className="sidepage chamados dropdown-toggle w-100 text-start"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i className="bi bi-gear-fill"></i> Chamados
               </button>
-            </a>
+              <ul className="dropdown-menu w-100">
+                <li>
+                  <a className="dropdown-item" href="/criar-chamado">
+                    Criar Chamado
+                  </a>
+                </li>
+                <li>
+                  <a className="dropdown-item" href="/meus-chamados">
+                    Meus Chamados
+                  </a>
+                </li>
+              </ul>
+            </div>
+
             <a href="">
               <button className="sidepage dashboard">
                 <i className="bi bi-book-fill"></i>Dashboard
@@ -53,7 +78,7 @@ export default function Sideuser() {
             >
               <span className="navbar-toggler-icon" />
             </button>
-            {/* Offcanvas */}
+
             <div
               className="offcanvas offcanvas-start"
               data-bs-backdrop="static"
@@ -63,7 +88,7 @@ export default function Sideuser() {
             >
               <div className="offcanvas-header">
                 <img
-                  src="/logotipos/logoEscritaVermelha.png"
+                  src="/logotipos/logoEscritaBranca.png"
                   className="logo-mobile"
                   alt=""
                 />
@@ -81,11 +106,28 @@ export default function Sideuser() {
                       <i className="bi bi-person-fill"></i>Perfil
                     </button>
                   </a>
-                  <a href="">
-                    <button className="sidepage chamados">
-                      <i className="bi bi-gear-fill"></i>Chamados
+                  <div className="dropdown">
+                    <button
+                      className="sidepage chamados dropdown-toggle w-100 text-start"
+                      type="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i className="bi bi-gear-fill"></i> Chamados
                     </button>
-                  </a>
+                    <ul className="dropdown-menu">
+                      <li>
+                        <a className="dropdown-item" href="/criar-chamado">
+                          Criar Chamado
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item" href="/meus-chamados">
+                          Meus Chamados
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                   <a href="">
                     <button className="sidepage dashboard">
                       <i className="bi bi-book-fill"></i>Dashboard

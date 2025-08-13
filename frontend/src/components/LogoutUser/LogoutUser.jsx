@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -34,7 +34,7 @@ const StyledWrapper = styled.div`
     border: none;
     border-radius: 5px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
-    background: #e30615;
+    background: var(--branco);
   }
 
   button,
@@ -44,7 +44,7 @@ const StyledWrapper = styled.div`
 
   button .text {
     transform: translateX(35px);
-    color: white;
+    color: var(--vermelho);
     font-weight: bold;
   }
 

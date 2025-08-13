@@ -1,5 +1,7 @@
 'use client'
+import { io } from 'socket.io-client';
 import './style.css';
+const socket = io('http://localhost:8000/chat')
 
 export default function Home() {
   return (

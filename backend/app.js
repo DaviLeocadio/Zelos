@@ -4,6 +4,7 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 import authRotas from './routes/authRotas.js';
 import chamadoRotas from './routes/chamadoRotas.js';
+import chatRotas from './routes/chatRotas.js';
 import passport from './config/ldap.js';
 
 // 1. Carrega variáveis de ambiente PRIMEIRO
@@ -42,7 +43,8 @@ try {
 
 // 5. Rotas
 app.use('/auth', authRotas);
-app.use('/chamados', chamadoRotas)
+app.use('/chamados', chamadoRotas);
+app.use('/chat', chatRotas);
 
 app.get('/api/equipamentos/filtrar', (req, res) => {
   const { query } = req.query;
