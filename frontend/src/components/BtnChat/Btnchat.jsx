@@ -13,7 +13,7 @@ const Button = () => {
             </svg>
           </div>
         </div>
-        <span>Send</span>
+        <span className='fs-6'>Falar com técnico</span>
       </button>
     </StyledWrapper>
   );
@@ -23,9 +23,9 @@ const StyledWrapper = styled.div`
   button {
     font-family: inherit;
     font-size: 20px;
-    background: royalblue;
+    background: #b5000c;
     color: white;
-    padding: 0.7em 1em;
+    padding: 0.2em 0.8em;
     padding-left: 0.9em;
     display: flex;
     align-items: center;
@@ -53,11 +53,11 @@ const StyledWrapper = styled.div`
   }
 
   button:hover svg {
-    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+    transform: translateX(3em) rotate(45deg) scale(1.1);
   }
 
   button:hover span {
-    transform: translateX(5em);
+    transform: translateX(9em);
   }
 
   button:active {

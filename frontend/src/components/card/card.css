@@ -1,12 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root {
+  --branco: #ffff;
+  --vermelhoEscuro: #8e0009;
+  --vermelhoMedio: #b5000c;
+  --vermelho: #e30615;
+  --preto: #000000;
+  --cinza: #808080;
+  font-family: "Montserrat", sans-serif;
+
+}
+
 .card {
   width: 15.3rem; 
   height: 55%;
   border-radius: 20px;
   border: 0;
   transition: all 0.2s ease-in-out;
-  margin-bottom: 20vh;
+  
 }
 
 .card:hover{
@@ -14,14 +25,29 @@
   cursor: pointer;
 }
 
-.card-prioridade {
-  background-color: #1800ad;
+.card-prioridade-emergencia {
+  background-color: var(--vermelho);
   width: 100%;
   border-radius: 20px 20px 0px 0 ;
   padding: 3px 10px 1px 10px;
   } 
 
-  .card-prioridade p{
+  .card-prioridade-emergencia p{
+  background-color: var(--vermelho);
+  margin-bottom: 1%;
+  margin-top: 1%;
+  color: #fff;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.card-prioridade-muito-urgente {
+  background-color: #1800ad;
+  width: 100%;
+  border-radius: 20px 20px 0px 0 ;
+  padding: 3px 10px 1px 10px;
+}
+
+.card-prioridade-muito-urgente p{
   background-color: #1800ad;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -29,14 +55,14 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-prioridade1 {
+.card-prioridade-urgente {
   background-color: #c7ae4a;
   width: 100%;
   border-radius: 20px 20px 0px 0 ;
   padding: 3px 10px 1px 10px;
 }
 
-.card-prioridade1 p{
+.card-prioridade-urgente p{
   background-color: #c7ae4a;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -44,7 +70,22 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-prioridade2 p{
+.card-prioridade-pouco-urgente {
+  background-color: #ff7f00;
+  width: 100%;
+  border-radius: 20px 20px 0px 0 ;
+  padding: 3px 10px 1px 10px;
+}
+
+.card-prioridade-pouco-urgente p{
+  background-color: #ff7f00;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  color: #fff;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.card-prioridade-nao-urgente p{
   background-color: #00bf63;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -52,7 +93,7 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-prioridade2 {
+.card-prioridade-nao-urgente {
   background-color: #00bf63;
   width: 100%;
   border-radius: 20px 20px 0px 0 ;
@@ -96,9 +137,24 @@
   font-size: 14px;
 }
 
+.card-tecnico{
+  font-family: "Montserrat", sans-serif;
+  max-width: 85%;
+  padding-left: 12%;
+  align-items: center ;
+  justify-content: center;
+  display: flex;
+  margin-top: 3px;
+  
+}
+
+.card-tecnico p{
+  font-size: 14px;
+}
+
 .status-card{
   margin-top:14px;
-  color: #931c1b;
+  color: var(--vermelhoEscuro);
   font-size: 12px;
 }
 
