@@ -1,7 +1,35 @@
-import { getMensagens } from "../models/Chat.js";
+import { listarMensagens, criarMensagens } from "../models/Chat.js";
 
-export function listarMensagens(req, res) {
-  const { chamadoId } = req.params;
-  const mensagens = getMensagens(chamadoId);
-  res.json(mensagens);
+const listarMensagensController = async (req, res) => {
+  try {
+    const mensagens = await listarMensagens();
+    res.status(200).json(mensagens);
+  } catch (err) {
+    console.error('Erro ao listar mensagens', err);
+    res.status(500).json({ mensagem: 'Erro ao listar mensagens' })
+  }
 }
+
+const criarMensagensController = async (req, res) => {
+  try {
+    const { conteudo, cargo, chamado_id } = req.body;
+ 
+    const chatData = {
+      conteudo: conteudo,
+      cargo: cargo,
+      chamado_id: chamado_id
+    };
+
+    const chatId = await criarMensagens(chatData);
+    res.status(201).json({ mensagem: 'Chat criado com sucesso', chatId });
+  } catch (error) {
+    console.error('Erro ao criar chat:', error);
+    res.status(500).json({ mensagem: 'Erro ao criar chat' });
+  }
+}
+
+export { listarMensagensController, criarMensagensController }
+
+
+
+

@@ -1,37 +1,21 @@
-import fs from "fs";
-import path from "path";
+import { create, readAll } from "../config/database";
 
-const filePath = path.resolve("backend", "data", "chamados.json");
+const listarMensagens = async () => {
+  try {
+    return await readAll('mensagens');
+  } catch (error) {
+    console.error('Erro ao listar mensagem:', error);
+    throw error;
+  }
+};
 
-function lerChamados() {
-  const data = fs.readFileSync(filePath, "utf8");
-  return JSON.parse(data);
-}
+const criarMensagens = async (mensagemData) => {
+  try {
+    return await create('mensagens', mensagemData);
+  } catch (error) {
+    console.error('Erro ao criar mensagem:', error);
+    throw error;
+  }
+};
 
-function salvarChamados(chamados) {
-  fs.writeFileSync(filePath, JSON.stringify(chamados, null, 2));
-}
-
-export function getMensagens(chamadoId) {
-  const chamados = lerChamados();
-  const chamado = chamados.find(c => c.id == chamadoId);
-  return chamado?.mensagens || [];
-}
-
-export function addMensagem(chamadoId, mensagem) {
-  const chamados = lerChamados();
-  const chamado = chamados.find(c => c.id == chamadoId);
-
-  if (!chamado) return;
-
-  if (!chamado.mensagens) chamado.mensagens = [];
-
-  chamado.mensagens.push({
-    de: mensagem.de,
-    para: mensagem.para,
-    texto: mensagem.texto,
-    horario: new Date().toISOString()
-  });
-
-  salvarChamados(chamados);
-}
+export {criarMensagens, listarMensagens}

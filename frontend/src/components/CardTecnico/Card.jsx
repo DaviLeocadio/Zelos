@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import "./card.css";
 import { useEffect, useState } from "react";
 import React from "react";
@@ -111,12 +111,20 @@ ColorlibStepIcon.propTypes = {
 
 export default function Card() {
   const [chamados, setChamados] = useState([]);
-  const [cardProgresso, setCardProgresso] = useState(false);
+  const [chamadoUser, setChamadoUser] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:8080/chamados")
       .then((response) => response.json())
       .then((informacao) => setChamados(informacao));
+
+    const userId = localStorage.getItem('userid');
+
+    const chamados_user = chamados.filter(
+      (d) => parseInt(d.id_user) === userId
+    );
+    setChamadoUser(chamados_user);
+
   }, []);
 
   const ordemPrioridade = {
@@ -127,9 +135,9 @@ export default function Card() {
   };
 
   const status = {
-    "Pendente": 0,
-    "Em andamento": 1,
-    "Concluído": 2,
+    pendente: 0,
+    "em andamento": 1,
+    concluído: 2,
   };
 
   function atualizacao(data) {
@@ -143,40 +151,42 @@ export default function Card() {
   }
 
   function MudarProgresso(id, status) {
-    if (status === 'Pendente') {
+    if (status === "Pendente") {
       fetch(`http://localhost:8080/chamados/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: "Pendente" })
+        body: JSON.stringify({ status: "Pendente" }),
       });
       console.log("Status alterado para Pendente");
       return;
     }
-    if (status === 'Em andamento') {
+    if (status === "Em andamento") {
       fetch(`http://localhost:8080/chamados/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: "Em andamento" })
-
+        body: JSON.stringify({ status: "Em andamento" }),
       });
       console.log("Status alterado para Em andamento");
       return;
-    } else if (status === 'Concluído') {
+    } else if (status === "Concluído") {
       fetch(`http://localhost:8080/chamados/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: "Concluído" })
+        body: JSON.stringify({ status: "Concluído" }),
       });
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+      
       console.log("Status alterado para Concluído");
       return;
     }
-
   }
 
   return (
@@ -186,13 +196,11 @@ export default function Card() {
           const statusA = status[a.status];
           const statusB = status[b.status];
 
-
           if (statusA === 2 && statusB !== 2) return 1;
           if (statusB === 2 && statusA !== 2) return -1;
 
-
           if (statusA !== 2 && statusB !== 2) {
-            return parseInt(b.prioridade) - parseInt(a.prioridade);
+            return parseInt(b.grau_prioridade) - parseInt(a.grau_prioridade);
           }
           return 0;
         })
@@ -200,11 +208,13 @@ export default function Card() {
           if (status[chamado.status] == 2) {
             return (
               <React.Fragment key={chamado.id}>
-                <div className="card-desativado" >
+                <div className="card-desativado">
                   <div
-                    className={`card-prioridade-${chamado.prioridade}  align-items-center justify-content-center d-flex`}
+                    className={`card-prioridade-${chamado.grau_prioridade}  align-items-center justify-content-center d-flex`}
                   >
-                    <p className="">{ordemPrioridade[chamado.prioridade]}</p>
+                    <p className="">
+                      {ordemPrioridade[chamado.grau_prioridade]}
+                    </p>
                   </div>
 
                   <main className="d-grid mt-4">
@@ -312,11 +322,12 @@ export default function Card() {
             return (
               <React.Fragment key={chamado.id}>
                 <div className="card">
-
                   <div
-                    className={`card-prioridade-${chamado.prioridade}  align-items-center justify-content-center d-flex`}
+                    className={`card-prioridade-${chamado.grau_prioridade}  align-items-center justify-content-center d-flex`}
                   >
-                    <p className="">{ordemPrioridade[chamado.prioridade]}</p>
+                    <p className="">
+                      {ordemPrioridade[chamado.grau_prioridade]}
+                    </p>
                   </div>
 
                   <main className="d-grid mt-4">
@@ -347,7 +358,6 @@ export default function Card() {
                               <StepLabel
                                 StepIconComponent={ColorlibStepIcon}
                                 onClick={() => {
-                                 
                                   const statusText = Object.keys(status).find(
                                     (key) => status[key] === stepIndex
                                   );
@@ -356,7 +366,6 @@ export default function Card() {
                                 style={{ cursor: "pointer" }}
                               />
                             ) : (
-                        
                               <StepLabel StepIconComponent={ColorlibStepIcon} />
                             )}
                           </Step>
@@ -391,7 +400,10 @@ export default function Card() {
                       </div>
 
                       <div className="card-atualizacao">
-                        <p><b>Atualizado em:</b>{atualizacao(chamado.atualizado_em)}</p>
+                        <p>
+                          <b>Atualizado em:</b>
+                          {atualizacao(chamado.atualizado_em)}
+                        </p>
                       </div>
 
                       <div className="chat align-items-center justify-content-center d-grid">
@@ -416,10 +428,11 @@ export default function Card() {
                 >
                   <div className="modal-dialog modal-lg modal-dialog-centered">
                     <div className="modal-content">
-
-
                       <div className="modal-header">
-                        <h2 className="modal-title" id={`modalLabel-${chamado.id}`}>
+                        <h2
+                          className="modal-title"
+                          id={`modalLabel-${chamado.id}`}
+                        >
                           <b>Informações do Chamado:</b>
                         </h2>
                         <button
@@ -430,15 +443,24 @@ export default function Card() {
                         ></button>
                       </div>
 
-
                       <div className="modal-body d-flex">
                         <div className="d-grid gap-0 m-0">
-                          <p className="d-grid"><b className="m-0">Título: </b> {chamado.titulo}</p>
-                          <p className="d-grid"><b className="m-0">Técnico responsável: </b>{chamado.tecnico}</p>
-                          <p className="d-grid"><b className="m-0">Descrição: </b>{chamado.descricao}</p>
-                          <p className="d-grid"><b className="m-0">Prioridade: </b>{ordemPrioridade[chamado.prioridade]}</p>
+                          <p className="d-grid">
+                            <b className="m-0">Título: </b> {chamado.titulo}
+                          </p>
+                          <p className="d-grid">
+                            <b className="m-0">Técnico responsável: </b>
+                            {chamado.tecnico}
+                          </p>
+                          <p className="d-grid">
+                            <b className="m-0">Descrição: </b>
+                            {chamado.descricao}
+                          </p>
+                          <p className="d-grid">
+                            <b className="m-0">Prioridade: </b>
+                            {ordemPrioridade[chamado.grau_prioridade]}
+                          </p>
                         </div>
-
 
                         <div className="">
                           <Chat />
@@ -447,7 +469,6 @@ export default function Card() {
                     </div>
                   </div>
                 </div>
-
               </React.Fragment>
             );
           }

@@ -1,8 +1,9 @@
 import express from "express";
-import { listarMensagens } from "../controllers/chatController.js";
+import { listarMensagensController, criarMensagensController } from "../controllers/ChatController.js";
 
 const router = express.Router();
 
-router.get("/:chamadoId", listarMensagens);
+router.post("/", criarMensagensController)
+router.get("/:chamadoId", listarMensagensController);
 
 export default router;

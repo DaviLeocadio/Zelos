@@ -3,13 +3,20 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-
 import './chat.css';
 
-export default function Chat() {
+export default function Chat(cargoObj) {
   const [texto, setTexto] = useState('');
   const [mensagens, setMensagens] = useState([]);
+  const [cargoContrario, setCargoContrario] = useState('');
   const [carregandoMensagens, setCarregandoMensagens] = useState(true);
+
+    if(cargoObj == 'tecnico'){
+      setCargoContrario('usuario')
+    } 
+    if(cargoObj == 'usuario'){
+      setCargoContrario('tecnico')
+    }
 
   const fimDasMensagensRef = (fim) => {
     if (fim) {
@@ -25,18 +32,18 @@ export default function Chat() {
       } catch {
         setMensagens([
           {
-            autor: 'gemini',
+            autor: `${cargoContrario}`,
             texto:
-              'Olá! Sou a Vika, sua assistente virtual da Clínica Vida Plena. Como posso te ajudar hoje?',
+              'Olá!',
           },
         ]);
       }
     } else {
       setMensagens([
         {
-          autor: 'gemini',
+          autor: `${cargoContrario}`,
           texto:
-            'Olá! Sou a Vika, sua assistente virtual da Clínica Vida Plena. Como posso te ajudar hoje?',
+            'Olá!',
         },
       ]);
     }
@@ -49,10 +56,10 @@ export default function Chat() {
     }
   }, [mensagens, carregandoMensagens]);
 
-  async function enviarGemini() {
+  async function enviarMensagem() {
     if (!texto.trim()) return;
 
-    const mensagemUsuario = { autor: 'user', texto };
+    const mensagemUsuario = { autor: `${cargoObj}`, texto };
     setMensagens((anteriores) => [...anteriores, mensagemUsuario]);
     setTexto('');
 
@@ -63,11 +70,13 @@ export default function Chat() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          mensagem: texto,
+          conteudo: texto,
         }),
       });
 
       const data = await response.json();
+
+      console.log(data)
     } catch (error) {
       console.error('Erro:', error);
       setMensagens((anteriores) => [
@@ -81,43 +90,23 @@ export default function Chat() {
     return;
   }
 
-  const nomePerfil = 'Davi Leocadio';
-  const partes = nomePerfil.trim().split(' ');
-  const iniciais =
-    partes[0].charAt(0).toUpperCase() +
-    partes[partes.length - 1].charAt(0).toUpperCase();
-  const nomeExibido = `${partes[0]} ${partes[partes.length - 1]}`;
+
 
   return (
     <>
-
-
       <div className="offcanvas-body d-flex flex-column p-0 chat-container">
         <div className="">
           <div className="card-container">
-            <div className="card-header d-grid sticky-top bg-white">
-              
-              <div className="d-flex">
-                <div className="img-avatar">
-                  <p>{iniciais}</p>
-                </div>
-                <div className="nome-chat">
-                  {nomeExibido}
-                </div>
-              </div>
 
-
-
-            </div>
             <div className="card-body">
               <div className="messages-container">
                 {mensagens.map((mensagem, chave) => (
                   <div
                     key={chave}
-                    className={`message-box ${mensagem.autor === 'user' ? 'right' : 'left'
+                    className={`message-box ${mensagem.autor === 'usuario' ? 'right' : 'left'
                       }`}
                   >
-                    {mensagem.autor === 'gemini' ? (
+                    {mensagem.autor === `${cargoContrario}` ? (
                       <div className="markdown">
                         <p>{mensagem.texto}</p>
                       </div>
@@ -140,13 +129,13 @@ export default function Chat() {
               value={texto}
               onChange={(e) => setTexto(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') enviarGemini();
+                if (e.key === 'Enter') enviarMensagem();
               }}
               required
             />
             <button
               className="btn btn-modal-chat ms-2"
-              onClick={enviarGemini}
+              onClick={enviarMensagem}
             >
               <i className="bi bi-arrow-right"></i>
             </button>

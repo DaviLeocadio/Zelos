@@ -1,7 +1,7 @@
 
 import "./chamados.css";
 import Card from "@/components/CardTecnico/Card";
-
+import Card_2 from "@/components/CardVirgem/Card"
 
 export default function Meus_chamados() {
 
@@ -18,7 +18,7 @@ export default function Meus_chamados() {
       </div>
       
       <div className="cards d-md-flex d-none gap-4 flex-wrap">
-        <Card />
+        <Card_2 />
       </div>
       <div className="cards-celular mt-4 d-flex gap-4 align-items-center justify-content-center d-md-none flex-wrap">
         <Card />

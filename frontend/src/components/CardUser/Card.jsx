@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import "./card.css";
 import { useEffect, useState } from "react";
 import React from "react";
@@ -126,9 +126,9 @@ export default function Card() {
   };
 
   const status = {
-    "Pendente": 0,
-    "Em andamento": 1,
-    "Concluído": 2,
+    pendente: 0,
+    "em andamento": 1,
+    concluído: 2,
   };
 
   function atualizacao(data) {
@@ -141,7 +141,12 @@ export default function Card() {
     return `${dia}/${mes}/${ano}`;
   }
 
-
+  const nomePerfil = 'Davi Leocadio';
+  const partes = nomePerfil.trim().split(' ');
+  const iniciais =
+    partes[0].charAt(0).toUpperCase() +
+    partes[partes.length - 1].charAt(0).toUpperCase();
+  const nomeExibido = `${partes[0]} ${partes[partes.length - 1]}`;
 
   return (
     <>
@@ -150,13 +155,11 @@ export default function Card() {
           const statusA = status[a.status];
           const statusB = status[b.status];
 
-
           if (statusA === 2 && statusB !== 2) return 1;
           if (statusB === 2 && statusA !== 2) return -1;
 
-
           if (statusA !== 2 && statusB !== 2) {
-            return parseInt(b.prioridade) - parseInt(a.prioridade);
+            return parseInt(b.grau_prioridade) - parseInt(a.grau_prioridade);
           }
           return 0;
         })
@@ -164,11 +167,13 @@ export default function Card() {
           if (status[chamado.status] == 2) {
             return (
               <React.Fragment key={chamado.id}>
-                <div className="card-desativado" >
+                <div className="card-desativado">
                   <div
-                    className={`card-prioridade-${chamado.prioridade}  align-items-center justify-content-center d-flex`}
+                    className={`card-prioridade-${chamado.grau_prioridade}  align-items-center justify-content-center d-flex`}
                   >
-                    <p className="">{ordemPrioridade[chamado.prioridade]}</p>
+                    <p className="">
+                      {ordemPrioridade[chamado.grau_prioridade]}
+                    </p>
                   </div>
 
                   <main className="d-grid mt-4">
@@ -263,7 +268,7 @@ export default function Card() {
                       <p>{chamado.titulo}</p>
                       <p>{chamado.tecnico}</p>
                       <p>{chamado.descricao}</p>
-                      <p>{chamado.prioridade}</p>
+                      <p>{chamado.grau_prioridade}</p>
                     </div>
                     <div className="modal-content">
                       <Chat />
@@ -276,11 +281,12 @@ export default function Card() {
             return (
               <React.Fragment key={chamado.id}>
                 <div className="card">
-
                   <div
-                    className={`card-prioridade-${chamado.prioridade}  align-items-center justify-content-center d-flex`}
+                    className={`card-prioridade-${chamado.grau_prioridade}  align-items-center justify-content-center d-flex`}
                   >
-                    <p className="">{ordemPrioridade[chamado.prioridade]}</p>
+                    <p className="">
+                      {ordemPrioridade[chamado.grau_prioridade]}
+                    </p>
                   </div>
 
                   <main className="d-grid mt-4">
@@ -350,7 +356,10 @@ export default function Card() {
                       </div>
 
                       <div className="card-atualizacao">
-                        <p><b>Atualizado em:</b>{atualizacao(chamado.atualizado_em)}</p>
+                        <p>
+                          <b>Atualizado em:</b>
+                          {atualizacao(chamado.atualizado_em)}
+                        </p>
                       </div>
 
                       <div className="chat align-items-center justify-content-center d-grid">
@@ -375,12 +384,21 @@ export default function Card() {
                 >
                   <div className="modal-dialog modal-lg modal-dialog-centered">
                     <div className="modal-content">
-
-              
                       <div className="modal-header">
-                        <h2 className="modal-title" id={`modalLabel-${chamado.id}`}>
-                          <b>Informações do Chamado:</b>
+                        <h2
+                          className="modal-title"
+                          id={`modalLabel-${chamado.id}`}
+                        >
+                          <b>Ficha Técnica:</b>
                         </h2>
+                        <div className="modal-inicial d-grid sticky-top bg-white">
+                          <div className="d-flex">
+                            <div className="img-avatar">
+                              <p>{iniciais}</p>
+                            </div>
+                            <div className="nome-chat">{nomeExibido}</div>
+                          </div>
+                        </div>
                         <button
                           type="button"
                           className="btn-close"
@@ -389,24 +407,34 @@ export default function Card() {
                         ></button>
                       </div>
 
-                 
                       <div className="modal-body d-flex">
                         <div className="d-grid gap-0 m-0">
-                          <p className="d-grid"><b className="m-0">Título: </b> {chamado.titulo}</p>
-                          <p className="d-grid"><b className="m-0">Técnico responsável: </b>{chamado.tecnico}</p>
-                          <p className="d-grid"><b className="m-0">Descrição: </b>{chamado.descricao}</p>
-                          <p className="d-grid"><b className="m-0">Prioridade: </b>{ordemPrioridade[chamado.prioridade]}</p>
+                          <p className="d-grid">
+                            <b className="m-0">Título: </b> {chamado.titulo}
+                          </p>
+                          <p className="d-grid">
+                            <b className="m-0">Técnico responsável: </b>
+                            {chamado.tecnico}
+                          </p>
+                          <p className="d-grid">
+                            <b className="m-0">Descrição: </b>
+                            {chamado.descricao}
+                          </p>
+                          <p className="d-grid">
+                            <b className="m-0">Prioridade: </b>
+                            {ordemPrioridade[chamado.grau_prioridade]}
+                          </p>
                         </div>
 
-                   
-                        <div className="">
+                        <div className="line"></div>
+
+                        <div className="chat-container">
                           <Chat />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
               </React.Fragment>
             );
           }

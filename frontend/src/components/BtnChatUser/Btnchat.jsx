@@ -21,7 +21,7 @@ const Button = () => {
             </svg>
           </div>
         </div>
-        <span className="fs-6">Falar com técnico</span>
+        <span className="fs-6">Ver Mais</span>
       </button>
     </StyledWrapper>
   );
@@ -61,11 +61,11 @@ const StyledWrapper = styled.div`
   }
 
   button:hover svg {
-    transform: translateX(3em) rotate(45deg) scale(1.1);
+    transform: translateX(1.6em) rotate(45deg) scale(1.1);
   }
 
   button:hover span {
-    transform: translateX(9em);
+    transform: translateX(7em);
   }
 
   button:active {
