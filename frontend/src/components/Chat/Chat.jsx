@@ -57,7 +57,7 @@ export default function Chat() {
     setTexto('');
 
     try {
-      const response = await fetch('http://localhost:3001/vika', {
+      const response = await fetch('http://localhost:8080/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,73 +81,79 @@ export default function Chat() {
     return;
   }
 
+  const nomePerfil = 'Davi Leocadio';
+  const partes = nomePerfil.trim().split(' ');
+  const iniciais =
+    partes[0].charAt(0).toUpperCase() +
+    partes[partes.length - 1].charAt(0).toUpperCase();
+  const nomeExibido = `${partes[0]} ${partes[partes.length - 1]}`;
+
   return (
     <>
-      
-      
-        <div className="offcanvas-body d-flex flex-column p-0">
-          <div className="card-body flex-grow-1 overflow-auto">
-            <div className="card-container">
-              <div className="card-header sticky-top bg-white">
+
+
+      <div className="offcanvas-body d-flex flex-column p-0 chat-container">
+        <div className="">
+          <div className="card-container">
+            <div className="card-header d-grid sticky-top bg-white">
+              
+              <div className="d-flex">
                 <div className="img-avatar">
-                  <img src="/imgChatBot/chat-icon.png" alt="" />
+                  <p>{iniciais}</p>
                 </div>
-                <div className="text-chat">Fale com a Vika</div>
-                <div className="bt-chat-div">
-                  <button
-                    type="button"
-                    className="btn-close fechar-chat"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"
-                  ></button>
+                <div className="nome-chat">
+                  {nomeExibido}
                 </div>
               </div>
-              <div className="card-body">
-                <div className="messages-container">
-                  {mensagens.map((mensagem, chave) => (
-                    <div
-                      key={chave}
-                      className={`message-box ${
-                        mensagem.autor === 'user' ? 'right' : 'left'
-                      }`}
-                    >
-                      {mensagem.autor === 'gemini' ? (
-                        <div className="markdown">
-                          <ReactMarkdown>{mensagem.texto}</ReactMarkdown>
-                        </div>
-                      ) : (
-                        <p>{mensagem.texto}</p>
-                      )}
-                    </div>
-                  ))}
-                  <div ref={fimDasMensagensRef} />
-                </div>
-              </div>
+
+
+
             </div>
-          </div>
-          <div className="modal-footer d-flex border-top p-3">
-            <div className="d-flex w-100">
-              <input
-                type="text"
-                className="form-control input-nova-chat w-100"
-                placeholder="Digite sua mensagem..."
-                value={texto}
-                onChange={(e) => setTexto(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') enviarGemini();
-                }}
-                required
-              />
-              <button
-                className="btn btn-modal-chat ms-2"
-                onClick={enviarGemini}
-              >
-                <i className="bi bi-arrow-right"></i>
-              </button>
+            <div className="card-body">
+              <div className="messages-container">
+                {mensagens.map((mensagem, chave) => (
+                  <div
+                    key={chave}
+                    className={`message-box ${mensagem.autor === 'user' ? 'right' : 'left'
+                      }`}
+                  >
+                    {mensagem.autor === 'gemini' ? (
+                      <div className="markdown">
+                        <p>{mensagem.texto}</p>
+                      </div>
+                    ) : (
+                      <p>{mensagem.texto}</p>
+                    )}
+                  </div>
+                ))}
+                <div ref={fimDasMensagensRef} />
+              </div>
             </div>
           </div>
         </div>
-      
+        <div className="modal-footer d-flex border-top p-3">
+          <div className="d-flex w-100">
+            <input
+              type="text"
+              className="form-control input-nova-chat w-100"
+              placeholder="Digite sua mensagem..."
+              value={texto}
+              onChange={(e) => setTexto(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') enviarGemini();
+              }}
+              required
+            />
+            <button
+              className="btn btn-modal-chat ms-2"
+              onClick={enviarGemini}
+            >
+              <i className="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
     </>
   );
 }

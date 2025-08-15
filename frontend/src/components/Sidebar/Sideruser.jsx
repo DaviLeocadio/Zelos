@@ -2,7 +2,7 @@ import './sideuser.css';
 
 import LogoutUser from '../LogoutUser/LogoutUser';
 
-const nomePerfil = 'Giulia Berraquero Ventre';
+const nomePerfil = 'Davi Leocadio';
 const partes = nomePerfil.trim().split(' ');
 const iniciais =
   partes[0].charAt(0).toUpperCase() +

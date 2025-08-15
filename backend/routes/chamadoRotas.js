@@ -1,7 +1,8 @@
 import express from 'express';
-import { listarChamadosController } from '../controllers/ChamadoController.js';
+import { listarChamadosController, atualizarChamadoController } from '../controllers/ChamadoController.js';
 const router = express.Router();
 
 router.get('/', listarChamadosController);
+router.put('/:id', atualizarChamadoController);
 
 export default router;

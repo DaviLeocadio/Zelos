@@ -1,8 +1,7 @@
-//Chat
+import { getMensagens } from "../models/Chat.js";
 
-
-const ChatController = async (req, res) => {
-  
+export function listarMensagens(req, res) {
+  const { chamadoId } = req.params;
+  const mensagens = getMensagens(chamadoId);
+  res.json(mensagens);
 }
-
-export { ChatController };

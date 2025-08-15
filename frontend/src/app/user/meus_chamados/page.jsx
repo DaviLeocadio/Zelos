@@ -1,6 +1,6 @@
-'use client';
+
 import "./meus_chamados.css";
-import Card from "@/components/Card/Card";
+import Card from "@/components/CardUser/Card";
 
 
 export default function Meus_chamados() {

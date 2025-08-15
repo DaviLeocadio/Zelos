@@ -4,14 +4,14 @@ const listarChamados = async () => {
   try {
     return await readAll('chamados');
   } catch (error) {
-    console.error('Erro ao listar livros:', error);
+    console.error('Erro ao listar chamados:', error);
     throw error;
   }
 };
 
 const obterChamadoPorId = async (id) => {
   try {
-    return await read('livros', `id = ${id}`);
+    return await read('chamados', `id = ${id}`);
   } catch (error) {
     console.error('Erro ao obter livro por ID:', error);
     throw error;
@@ -20,25 +20,25 @@ const obterChamadoPorId = async (id) => {
 
 const criarChamado = async (livroData) => {
   try {
-    return await create('livros', livroData);
+    return await create('chamados', livroData);
   } catch (error) {
     console.error('Erro ao criar livro:', error);
     throw error;
   }
 };
 
-const atualizarChamado = async (id, livroData) => {
+const atualizarChamado = async (id, chamadoData) => {
   try {
-    await update('livros', livroData, `id = ${id}`);
+    await update('chamados', chamadoData, `id = ${id}`);
   } catch (error) {
-    console.error('Erro ao atualizar livro:', error);
+    console.error('Erro ao atualizar chamado:', error);
     throw error;
   }
 };
 
 const excluirChamado = async (id) => {
   try {
-    await deleteRecord('livros', `id = ${id}`);
+    await deleteRecord('chamados', `id = ${id}`);
   } catch (error) {
     console.error('Erro ao excluir livro:', error);
     throw error;

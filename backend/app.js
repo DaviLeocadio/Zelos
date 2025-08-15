@@ -6,6 +6,9 @@ import authRotas from './routes/authRotas.js';
 import chamadoRotas from './routes/chamadoRotas.js';
 import chatRotas from './routes/chatRotas.js';
 import passport from './config/ldap.js';
+import http from "http";
+import configureSocket from "./config/socket.js";
+import { Server } from "socket.io";
 
 // 1. Carrega variáveis de ambiente PRIMEIRO
 dotenv.config();
@@ -93,3 +96,14 @@ process.on('SIGTERM', () => {
     console.log('Servidor encerrado');
   });
 });
+
+//Chat
+const server_chat = http.createServer(app);
+const io = new Server(server_chat, { cors: { origin: "*" } });
+
+configureSocket(io);
+
+app.use(cors());
+app.use(express.json());
+app.use("/chat", chatRotas);
+

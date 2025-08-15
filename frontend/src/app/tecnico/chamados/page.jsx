@@ -1,10 +1,9 @@
 
 import "./chamados.css";
-import Card from "@/components/Card/Card";
+import Card from "@/components/CardTecnico/Card";
 
 
 export default function Meus_chamados() {
-  
 
   return (
     <>

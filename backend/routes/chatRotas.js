@@ -1,7 +1,8 @@
-import express from 'express';
-import { ChatController } from '../controllers/ChatController.js'
+import express from "express";
+import { listarMensagens } from "../controllers/chatController.js";
+
 const router = express.Router();
 
-router.get('/', ChatController);
+router.get("/:chamadoId", listarMensagens);
 
 export default router;

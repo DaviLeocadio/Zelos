@@ -1,8 +1,9 @@
 'use client'
 import "./card.css";
 import { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import BtnChat from "@/components/BtnChat/Btnchat";
+import BtnChat from "@/components/BtnChatTecnico/Btnchat";
 import Chat from "@/components/Chat/Chat.jsx";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
@@ -110,7 +111,7 @@ ColorlibStepIcon.propTypes = {
 
 export default function Card() {
   const [chamados, setChamados] = useState([]);
-  const [concluido, setConcluido] = useState(false);
+  const [cardProgresso, setCardProgresso] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:8080/chamados")
@@ -131,18 +132,75 @@ export default function Card() {
     "Concluído": 2,
   };
 
+  function atualizacao(data) {
+    const date = new Date(data);
 
+    const dia = date.getDate();
+    const mes = date.getMonth() + 1;
+    const ano = date.getFullYear();
+
+    return `${dia}/${mes}/${ano}`;
+  }
+
+  function MudarProgresso(id, status) {
+    if (status === 'Pendente') {
+      fetch(`http://localhost:8080/chamados/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: "Pendente" })
+      });
+      console.log("Status alterado para Pendente");
+      return;
+    }
+    if (status === 'Em andamento') {
+      fetch(`http://localhost:8080/chamados/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: "Em andamento" })
+
+      });
+      console.log("Status alterado para Em andamento");
+      return;
+    } else if (status === 'Concluído') {
+      fetch(`http://localhost:8080/chamados/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: "Concluído" })
+      });
+      console.log("Status alterado para Concluído");
+      return;
+    }
+
+  }
 
   return (
     <>
       {chamados
-        .sort((a, b) => parseInt(b.prioridade) - parseInt(a.prioridade))
-        .sort((a, b) => status[a.status] - status[b.status])
+        .sort((a, b) => {
+          const statusA = status[a.status];
+          const statusB = status[b.status];
+
+
+          if (statusA === 2 && statusB !== 2) return 1;
+          if (statusB === 2 && statusA !== 2) return -1;
+
+
+          if (statusA !== 2 && statusB !== 2) {
+            return parseInt(b.prioridade) - parseInt(a.prioridade);
+          }
+          return 0;
+        })
         .map((chamado) => {
           if (status[chamado.status] == 2) {
             return (
-              <>
-                <div className="card-desativado" key={chamado.id}>
+              <React.Fragment key={chamado.id}>
+                <div className="card-desativado" >
                   <div
                     className={`card-prioridade-${chamado.prioridade}  align-items-center justify-content-center d-flex`}
                   >
@@ -248,12 +306,13 @@ export default function Card() {
                     </div>
                   </div>
                 </div>
-              </>
+              </React.Fragment>
             );
           } else {
             return (
-              <>
-                <div className="card" key={chamado.id}>
+              <React.Fragment key={chamado.id}>
+                <div className="card">
+
                   <div
                     className={`card-prioridade-${chamado.prioridade}  align-items-center justify-content-center d-flex`}
                   >
@@ -282,21 +341,26 @@ export default function Card() {
                         activeStep={status[chamado.status]}
                         connector={<ColorlibConnector />}
                       >
-                        <Step>
-                          <StepLabel
-                            StepIconComponent={ColorlibStepIcon}
-                          ></StepLabel>
-                        </Step>
-                        <Step>
-                          <StepLabel
-                            StepIconComponent={ColorlibStepIcon}
-                          ></StepLabel>
-                        </Step>
-                        <Step>
-                          <StepLabel
-                            StepIconComponent={ColorlibStepIcon}
-                          ></StepLabel>
-                        </Step>
+                        {[0, 1, 2].map((stepIndex) => (
+                          <Step key={stepIndex}>
+                            {status[chamado.status] < stepIndex ? (
+                              <StepLabel
+                                StepIconComponent={ColorlibStepIcon}
+                                onClick={() => {
+                                 
+                                  const statusText = Object.keys(status).find(
+                                    (key) => status[key] === stepIndex
+                                  );
+                                  MudarProgresso(chamado.id, statusText);
+                                }}
+                                style={{ cursor: "pointer" }}
+                              />
+                            ) : (
+                        
+                              <StepLabel StepIconComponent={ColorlibStepIcon} />
+                            )}
+                          </Step>
+                        ))}
                       </Stepper>
                     </Stack>
                   </div>
@@ -327,7 +391,7 @@ export default function Card() {
                       </div>
 
                       <div className="card-atualizacao">
-                        <p><b>Atualizado em:</b>{chamado.atualizado_em}</p>
+                        <p><b>Atualizado em:</b>{atualizacao(chamado.atualizado_em)}</p>
                       </div>
 
                       <div className="chat align-items-center justify-content-center d-grid">
@@ -352,18 +416,39 @@ export default function Card() {
                 >
                   <div className="modal-dialog modal-lg modal-dialog-centered">
                     <div className="modal-content">
-                      <h2><b>Informações do Chamado:</b></h2>
-                      <p><b>Título:</b> {chamado.titulo}</p>
-                      <p><b>Técnico responsável</b>{chamado.tecnico}</p>
-                      <p>{chamado.descricao}</p>
-                      <p>{chamado.prioridade}</p>
-                    </div>
-                    <div className="modal-content">
-                      <Chat />
+
+
+                      <div className="modal-header">
+                        <h2 className="modal-title" id={`modalLabel-${chamado.id}`}>
+                          <b>Informações do Chamado:</b>
+                        </h2>
+                        <button
+                          type="button"
+                          className="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+
+
+                      <div className="modal-body d-flex">
+                        <div className="d-grid gap-0 m-0">
+                          <p className="d-grid"><b className="m-0">Título: </b> {chamado.titulo}</p>
+                          <p className="d-grid"><b className="m-0">Técnico responsável: </b>{chamado.tecnico}</p>
+                          <p className="d-grid"><b className="m-0">Descrição: </b>{chamado.descricao}</p>
+                          <p className="d-grid"><b className="m-0">Prioridade: </b>{ordemPrioridade[chamado.prioridade]}</p>
+                        </div>
+
+
+                        <div className="">
+                          <Chat />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </>
+
+              </React.Fragment>
             );
           }
         })}
