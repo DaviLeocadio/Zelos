@@ -1,37 +1,34 @@
-"use client";
-import '@/components/CardVirgem/card.css'
+'use client';
+import "./card.css";
 import React from "react";
 import BtnChat from "@/components/BtnChatUser/Btnchat";
 import Chat from "@/components/Chat/Chat.jsx";
-import BtnPegarChamado from "@/components/BtnPegarChamado/BtnPegarChamado";
+
 
 // import { getCookie } from 'cookies-next';
 
-export default function Card({
-  titulo,
-  patrimonio,
-  grau_prioridade,
-  prioridade,
-  id,
-  tipo,
-  usuario,
-  criado_em,
-  atualizado_em,
-  status,
-  descricao,
-  tecnico,
-}) {
-  const isConcluido = status === "concluído";
+export default function Card({ titulo, patrimonio, grau_prioridade, prioridade, id, tipo, usuario, criado_em, atualizado_em, status, descricao, tecnico }) {
 
-  async function atribuirTecnico(idChamado) {
-    const cookieJWT = getCookie("tokenJWT");
+
+  const nomePerfil = 'Davi Leocadio';
+  const partes = nomePerfil.trim().split(' ');
+  const iniciais =
+    partes[0].charAt(0).toUpperCase() +
+    partes[partes.length - 1].charAt(0).toUpperCase();
+  const nomeExibido = `${partes[0]} ${partes[partes.length - 1]}`;
+
+
+  const isConcluido = status === 'concluído';
+
+    async function atribuirTecnico(idChamado) {
+    const cookieJWT = getCookie('tokenJWT');
     try {
       const response = await fetch(
         `http://localhost:8080/criarchamado/${idChamado}`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            Authorization: "Bearer " + cookieJWT,
+            Authorization: 'Bearer ' + cookieJWT,
           },
         }
       );
@@ -39,22 +36,19 @@ export default function Card({
       console.log(data);
 
       if (response.ok) {
-        alert("chamado atribuido com sucesso");
+        alert('chamado atribuido com sucesso');
       } else {
-        alert("Erro ao atribuir chamado");
+        alert('Erro ao atribuir chamado');
       }
     } catch {
-      alert("Erro ao enviar dados");
+      alert('Erro ao enviar dados');
     }
   }
 
+
   return (
     <>
-      <div
-        className={`${
-          isConcluido ? "card-desativado" : "card"
-        } d-flex flex-column align-items-center justify-content-center`}
-      >
+      <div className={`${isConcluido ? 'card-desativado' : 'card'} d-flex flex-column align-items-center justify-content-center`}>
         <div
           className={`card-prioridade-${prioridade} d-flex align-items-center justify-content-center`}
         >
@@ -72,15 +66,16 @@ export default function Card({
 
           <div className="card-data d-grid w-100 justify-content-center align-items-center">
             <p>
-              <b>Criado em:</b>{" "}
-              {new Date(criado_em).toLocaleDateString("pt-BR")}
+              <b>Criado em:</b> {new Date(criado_em).toLocaleDateString('pt-BR')}
             </p>
           </div>
+
 
           <div className="status-card d-flex align-items-center justify-content-center">
             <p>{status}</p>
           </div>
         </main>
+
 
         <div className="accordion-item d-grid w-100 align-items-center justify-content-center">
           <div className="accordion-header d-grid w-100 align-items-center justify-content-center">
@@ -110,16 +105,13 @@ export default function Card({
             {!isConcluido && (
               <div className="card-atualizacao">
                 <p>
-                  <b>Atualizado em:</b>{" "}
-                  {new Date(atualizado_em).toLocaleDateString("pt-BR")}
+                  <b>Atualizado em:</b> {new Date(atualizado_em).toLocaleDateString('pt-BR')}
                 </p>
               </div>
             )}
 
             <div
-              className={`${
-                isConcluido ? "chat-desativado" : "chat"
-              } d-grid align-items-center justify-content-center`}
+              className={`${isConcluido ? "chat-desativado" : "chat"} d-grid align-items-center justify-content-center`}
             >
               <div
                 type="button"
@@ -136,7 +128,7 @@ export default function Card({
 
       {/* Modal */}
       <div
-        className="modal fade modal-lg"
+        className="modal fade"
         id={`modal-${id}`}
         tabIndex={-1}
         aria-labelledby={`modalLabel-${id}`}
@@ -161,10 +153,10 @@ export default function Card({
                   </h2>
                   <div className="modal-inicial d-grid sticky-top bg-white">
                     <div className="d-flex">
-                      <div className="img-person bg-0">
-                        <i class="bi bi-person-circle"></i>
+                      <div className="img-avatar">
+                        <p>{iniciais}</p>
                       </div>
-                      <div className="nome-chat">Sem Técnico</div>
+                      <div className="nome-chat">{nomeExibido}</div>
                     </div>
                   </div>
                   <button
@@ -181,14 +173,14 @@ export default function Card({
                       <b>Título:</b> {titulo}
                     </p>
                     <p>
-                      <b>Prioridade:</b> {grau_prioridade}
+                      <b>Prioridade:</b>{" "}
+                      {grau_prioridade}
                     </p>
                     <p>
-                      <b>Criação:</b>{" "}
-                      {new Date(criado_em).toLocaleDateString("pt-BR")}
+                      <b>Criação:</b> {new Date(criado_em).toLocaleDateString('pt-BR')}
                     </p>
                     <p>
-                      <b>Técnico:</b> {<p>{tecnico?.nome}</p>}
+                      <b>Técnico:</b> {tecnico}
                     </p>
                     <p>
                       <b>Patrimônio:</b> {patrimonio}
@@ -199,10 +191,11 @@ export default function Card({
                     <p>
                       <b>Descrição:</b> {descricao}
                     </p>
+
                   </div>
 
-                  <div className="chat-container-virgem">
-                    <Chat></Chat>
+                  <div className="chat-container">
+                    <h2>Sem Técnico</h2>
                   </div>
                 </div>
               </>

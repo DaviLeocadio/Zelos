@@ -11,7 +11,7 @@ export default function Meus_chamados() {
   const [tecnico, setTecnico] = useState();
 
   useEffect(() => {
-    const usuarioId = 2;
+    const usuarioId = 5;
     fetch("http://localhost:8080/chamados")
       .then((response) => response.json())
       .then((informacao) => {
@@ -22,8 +22,6 @@ export default function Meus_chamados() {
         
       })
       .catch((error) => console.error('Erro ao buscar chamados:', error));
-
-
 
   }, []);
 
@@ -140,8 +138,10 @@ export default function Meus_chamados() {
           </>
         ) : (
           <div className="d-flex flex-column align-items-center justify-content-center mt-5">
+            <img src="/fundo_semChamados.png" alt="" />
             <div className="sem-chamados gap-3 d-none d-md-flex">
               <h2>Você não possui chamados registrados</h2>
+              
               <Link href={'/user/criar_chamado'} className="border-0 btnVenhaCriar">
                 <BtnVenhaCriar />
               </Link>
@@ -149,8 +149,10 @@ export default function Meus_chamados() {
             </div>
 
             <div className="d-grid mt-4 w-100 d-md-none justify-content-center align-items-center">
+            <img src="/fundo_semChamados.png" alt="" />
               <h2 className="fs-4">Você não possui chamados registrados</h2>
               <div className="align-items-center justify-content-center d-flex">
+            
                 <Link href={'/user/criar_chamado'} className="border-0 btnVenhaCriar">
                 <BtnVenhaCriar />
               </Link>

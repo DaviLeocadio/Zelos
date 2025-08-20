@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
   --branco: #ffff;
@@ -8,6 +8,7 @@
   --preto: #000000;
   --cinza: #808080;
   font-family: "Montserrat", sans-serif;
+
 }
 
 .card {
@@ -135,6 +136,7 @@
   justify-content: center;
   display: flex;
   margin-top: 3px;
+
 }
 
 .card-descricao p {
@@ -162,6 +164,7 @@
   justify-content: center;
   display: flex;
   margin-top: 3px;
+
 }
 
 .card-tecnico p {
@@ -176,6 +179,7 @@
 
 .chat {
   width: 100%;
+
 }
 
 .chat input {
@@ -202,6 +206,8 @@
   border-radius: 15px;
 }
 
+
+
 .modal-content p {
   color: #000;
   font-size: 14px;
@@ -214,36 +220,28 @@
 
 .modal-content h2 {
   font-size: 23px;
+
 }
 
 .ficha {
   width: 100%;
-  max-width: 100%;
-  margin-left: 5rem;
-  height: 20rem;
-}
 
-.ficha p{
-  margin: 0;
-  padding: 0;
-  height: 5%;
+  margin-left: 5rem;
 }
 
 .modal-inicial {
   margin-left: 38%;
 }
 
-.chat-container-virgem {
-  width: 31rem !important;
-  height: 30rem;
-
+.chat-container {
+  width: 30rem !important;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
   display: flex;
   margin-left: 10%;
-}
-
-.chat-container-cel {
-  margin: 0;
-  margin-top: 20px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .modal-header {
@@ -255,18 +253,5 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  flex: auto;
-  margin-top: 11rem;
-}
-
-.modal-footer button {
-  background-color: #fff;
-}
-
-.img-person {
-  width: 30px;
-}
-
-.img-person {
-  width: 30px;
+  flex: auto  ;
 }

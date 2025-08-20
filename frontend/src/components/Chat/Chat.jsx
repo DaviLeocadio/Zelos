@@ -5,18 +5,10 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import './chat.css';
 
-export default function Chat({cargoObj}) {
+export default function Chat({}) {
   const [texto, setTexto] = useState('');
   const [mensagens, setMensagens] = useState([]);
-  const [cargoContrario, setCargoContrario] = useState('');
   const [carregandoMensagens, setCarregandoMensagens] = useState(true);
-
-    if(cargoObj == 'tecnico'){
-      setCargoContrario('usuario')
-    } 
-    if(cargoObj == 'usuario'){
-      setCargoContrario('tecnico')
-    }
 
   const fimDasMensagensRef = (fim) => {
     if (fim) {
@@ -32,18 +24,18 @@ export default function Chat({cargoObj}) {
       } catch {
         setMensagens([
           {
-            autor: `${cargoContrario}`,
+            autor: 'gemini',
             texto:
-              'Olá!',
+              'Chamado ainda não atendido!',
           },
         ]);
       }
     } else {
       setMensagens([
         {
-          autor: `${cargoContrario}`,
+          autor: 'gemini',
           texto:
-            'Olá!',
+            'Olá! Sou a Vika, sua assistente virtual da Clínica Vida Plena. Como posso te ajudar hoje?',
         },
       ]);
     }
@@ -56,27 +48,42 @@ export default function Chat({cargoObj}) {
     }
   }, [mensagens, carregandoMensagens]);
 
-  async function enviarMensagem() {
+  async function enviarGemini() {
     if (!texto.trim()) return;
 
-    const mensagemUsuario = { autor: `${cargoObj}`, texto };
+    const mensagemUsuario = { autor: 'user', texto };
     setMensagens((anteriores) => [...anteriores, mensagemUsuario]);
     setTexto('');
 
     try {
-      const response = await fetch('http://localhost:8080/chat', {
+      const response = await fetch('http://localhost:3001/vika', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          conteudo: texto,
+          mensagem: texto,
         }),
       });
 
       const data = await response.json();
 
-      console.log(data)
+      if (response.ok) {
+        setMensagens((anteriores) => [
+          ...anteriores,
+          { autor: 'gemini', texto: data },
+        ]);
+      } else {
+        setMensagens((anteriores) => [
+          ...anteriores,
+          {
+            autor: 'gemini',
+            texto:
+              data.mensagem ||
+              'Desculpe ocorreu um erro e eu não posso te responder agora!',
+          },
+        ]);
+      }
     } catch (error) {
       console.error('Erro:', error);
       setMensagens((anteriores) => [
@@ -90,8 +97,6 @@ export default function Chat({cargoObj}) {
     return;
   }
 
-
-
   return (
     <>
       <div className="offcanvas-body d-flex flex-column p-0 chat-container">
@@ -103,10 +108,10 @@ export default function Chat({cargoObj}) {
                 {mensagens.map((mensagem, chave) => (
                   <div
                     key={chave}
-                    className={`message-box ${mensagem.autor === 'usuario' ? 'right' : 'left'
+                    className={`message-box ${mensagem.autor === 'user' ? 'right' : 'left'
                       }`}
                   >
-                    {mensagem.autor === `${cargoContrario}` ? (
+                    {mensagem.autor === `gemini` ? (
                       <div className="markdown">
                         <p>{mensagem.texto}</p>
                       </div>
@@ -135,7 +140,7 @@ export default function Chat({cargoObj}) {
             />
             <button
               className="btn btn-modal-chat ms-2"
-              onClick={enviarMensagem}
+              onClick={enviarGemini}
             >
               <i className="bi bi-arrow-right"></i>
             </button>

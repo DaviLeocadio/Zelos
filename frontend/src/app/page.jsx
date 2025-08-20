@@ -1,7 +1,6 @@
 'use client'
-import { io } from 'socket.io-client';
 import './style.css';
-import Chat from '@/components/Chat/Chat';
+
 
 export default function Home() {
   return (

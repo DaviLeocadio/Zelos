@@ -1,8 +1,9 @@
 import { listarMensagens, criarMensagens } from "../models/Chat.js";
 
 const listarMensagensController = async (req, res) => {
+  const id = req.body.chamado_id;
   try {
-    const mensagens = await listarMensagens();
+    const mensagens = await listarMensagens(id);
     res.status(200).json(mensagens);
   } catch (err) {
     console.error('Erro ao listar mensagens', err);

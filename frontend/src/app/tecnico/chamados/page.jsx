@@ -14,7 +14,7 @@ export default function Meus_chamados() {
   const [filtroServico, setFiltroServico] = useState('');
 
   useEffect(() => {
-    const tecnicoId = 2;
+    const tecnicoId = 1;
     fetch("http://localhost:8080/chamados")
       .then((response) => response.json())
       .then((informacao) => {

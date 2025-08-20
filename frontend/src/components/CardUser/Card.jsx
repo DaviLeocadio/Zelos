@@ -87,9 +87,18 @@ export default function Card({ titulo, patrimonio, grau_prioridade, prioridade, 
             >
               <div
                 type="button"
-                className={isConcluido ? "btn-desativado" : "btn"}
+                className={`${isConcluido ? "btn-desativado" : "btn"} d-lg-block d-none`}
                 data-bs-toggle="modal"
                 data-bs-target={`#modal-${id}`}
+              >
+                <BtnChat />
+              </div>
+
+              <div
+                type="button"
+                className={`${isConcluido ? "btn-desativado" : "btn"} d-lg-none d-block`}
+                data-bs-toggle="modal"
+                data-bs-target={`#modal-cel-${id}`}
               >
                 <BtnChat />
               </div>
@@ -100,7 +109,7 @@ export default function Card({ titulo, patrimonio, grau_prioridade, prioridade, 
 
       {/* Modal */}
       <div
-        className="modal fade"
+        className="modal fade modal-lg"
         id={`modal-${id}`}
         tabIndex={-1}
         aria-labelledby={`modalLabel-${id}`}
@@ -152,7 +161,7 @@ export default function Card({ titulo, patrimonio, grau_prioridade, prioridade, 
                       <b>Criação:</b> {new Date(criado_em).toLocaleDateString('pt-BR')}
                     </p>
                     <p>
-                      <b>Técnico:</b> {tecnico}
+                      <b>Técnico:</b> {}
                     </p>
                     <p>
                       <b>Patrimônio:</b> {patrimonio}
@@ -166,7 +175,7 @@ export default function Card({ titulo, patrimonio, grau_prioridade, prioridade, 
                     
                   </div>
                 
-                  <div className="chat-container">
+                  <div className="chat-container-user">
                     <Chat cargoObj={usuario} />
                   </div>
                 </div>

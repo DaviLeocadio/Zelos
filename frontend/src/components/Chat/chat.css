@@ -19,7 +19,7 @@ body {
 }
 
 .chat-container {
-  width: 100%;
+  width: 20rem;
   height: 100%;
   max-height: 21rem;
   overflow-y: scroll;
@@ -216,6 +216,11 @@ body {
 .message-input .button-send:hover {
   background-color: var(--vermelhoMedio);
   color: var(--vermelho);
+}
+
+.chat-nao-iniciado p{
+  font-size: 15px;
+  color: #000;
 }
 
 @media (max-width: 576px) {

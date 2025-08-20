@@ -1,8 +1,8 @@
 import { create, readAll } from "../config/database.js";
 
-const listarMensagens = async () => {
+const listarMensagens = async (chamado_id) => {
   try {
-    return await readAll('mensagens');
+    return await readAll('apontamentos', `chamado_id = ${chamado_id}`);
   } catch (error) {
     console.error('Erro ao listar mensagem:', error);
     throw error;

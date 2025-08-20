@@ -100,13 +100,13 @@ export default function Card({ titulo, patrimonio, grau_prioridade, prioridade, 
 
       {/* Modal */}
       <div
-        className="modal fade"
+        className="modal fade modal-lg"
         id={`modal-${id}`}
         tabIndex={-1}
         aria-labelledby={`modalLabel-${id}`}
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-lg modal-dialog-centered">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             {isConcluido ? (
               <>
@@ -152,7 +152,7 @@ export default function Card({ titulo, patrimonio, grau_prioridade, prioridade, 
                       <b>Criação:</b> {new Date(criado_em).toLocaleDateString('pt-BR')}
                     </p>
                     <p>
-                      <b>Técnico:</b> {tecnico}
+                      <b>Técnico:</b> {<p>{tecnico?.nome}</p>}
                     </p>
                     <p>
                       <b>Patrimônio:</b> {patrimonio}
