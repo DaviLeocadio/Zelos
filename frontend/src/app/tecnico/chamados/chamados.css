@@ -1,22 +1,72 @@
-body{
+body {
   background-color: #eaeaea;
 }
 
-.fundo{
+.fundo {
   width: 100%;
 }
 
-.logo_senai{
+.logo_senai {
   margin-left: 50%;
   margin-top: 10px;
 }
 
-.cards{
- margin-left: 30%;
+.cards {
+  margin-left: 30%;
   margin-top: 20px;
 }
 
-.titulo-meus-chamados h2{
+.titulo-meus-chamados h2 {
   margin-left: 51.7%;
   margin-top: 3%;
+}
+
+.sem-chamados {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20rem;
+}
+
+.btnVenhaCriar {
+  text-decoration: none;
+}
+
+.filtro-tecnico {
+  display: flex;
+  gap: 1rem;
+  margin-left: 20rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.filtro-tecnico input {
+  padding: 0.2rem;
+  border: 0;
+  border-radius: 4px;
+}
+
+.filtro-tecnico input::before{
+  border: 0;
+}
+
+.filtro-tecnico select {
+  padding: 0.3rem;
+  border: 0;
+  border-radius: 4px;
+}
+
+@media (min-width: 768px) and (max-width: 1120px) {
+  .cards {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .titulo-meus-chamados {
+    margin-left: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-right: 2rem;
+  }
 }

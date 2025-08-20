@@ -1,4 +1,4 @@
-import { create, readAll } from "../config/database";
+import { create, readAll } from "../config/database.js";
 
 const listarMensagens = async () => {
   try {

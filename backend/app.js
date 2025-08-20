@@ -5,10 +5,10 @@ import dotenv from 'dotenv';
 import authRotas from './routes/authRotas.js';
 import chamadoRotas from './routes/chamadoRotas.js';
 import chatRotas from './routes/chatRotas.js';
+import userRotas from './routes/userRotas.js';
+import poolRotas from './routes/poolRotas.js';
 import passport from './config/ldap.js';
-import http from "http";
-import configureSocket from "./config/socket.js";
-import { Server } from "socket.io";
+
 
 // 1. Carrega variáveis de ambiente PRIMEIRO
 dotenv.config();
@@ -48,6 +48,8 @@ try {
 app.use('/auth', authRotas);
 app.use('/chamados', chamadoRotas);
 app.use('/chat', chatRotas);
+app.use('/user', userRotas);
+app.use('/pool', poolRotas);
 
 app.get('/api/equipamentos/filtrar', (req, res) => {
   const { query } = req.query;
@@ -97,13 +99,4 @@ process.on('SIGTERM', () => {
   });
 });
 
-//Chat
-const server_chat = http.createServer(app);
-const io = new Server(server_chat, { cors: { origin: "*" } });
-
-configureSocket(io);
-
-app.use(cors());
-app.use(express.json());
-app.use("/chat", chatRotas);
 

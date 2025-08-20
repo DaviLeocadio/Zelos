@@ -5,7 +5,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import './chat.css';
 
-export default function Chat(cargoObj) {
+export default function Chat({cargoObj}) {
   const [texto, setTexto] = useState('');
   const [mensagens, setMensagens] = useState([]);
   const [cargoContrario, setCargoContrario] = useState('');
