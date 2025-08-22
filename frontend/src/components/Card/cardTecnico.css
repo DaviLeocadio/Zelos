@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
   --branco: #ffff;
@@ -8,21 +8,18 @@
   --preto: #000000;
   --cinza: #808080;
   font-family: "Montserrat", sans-serif;
-
 }
 
-.card {
+.card-tecnico {
   width: 15.3rem;
-  height: 55%;
   border-radius: 20px;
   border: 0;
   transition: all 0.2s ease-in-out;
   background-color: #fff !important;
 }
 
-.card-desativado {
+.card-desativado-tecnico {
   width: 15.3rem;
-  height: 55%;
   border-radius: 20px;
   border: 0;
   transition: all 0.2s ease-in-out;
@@ -30,19 +27,19 @@
   background-color: #fff;
 }
 
-.card:hover {
+.card-tecnico:hover {
   transform: translateY(-5);
   cursor: pointer;
 }
 
-.card-prioridade-4 {
+.card-prioridade-4-tecnico {
   background-color: #d83d65;
   width: 100%;
   border-radius: 20px 20px 0px 0;
   padding: 3px 10px 1px 10px;
 }
 
-.card-prioridade-4 p {
+.card-prioridade-4-tecnico p {
   background-color: #d83d65;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -50,14 +47,14 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-prioridade-3 {
+.card-prioridade-3-tecnico {
   background-color: #417bd5;
   width: 100%;
   border-radius: 20px 20px 0px 0;
   padding: 3px 10px 1px 10px;
 }
 
-.card-prioridade-3 p {
+.card-prioridade-3-tecnico p {
   background-color: #417bd5;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -65,14 +62,14 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-prioridade-2 {
+.card-prioridade-2-tecnico {
   background-color: #ff9d59;
   width: 100%;
   border-radius: 20px 20px 0px 0;
   padding: 3px 10px 1px 10px;
 }
 
-.card-prioridade-2 p {
+.card-prioridade-2-tecnico p {
   background-color: #ff9d59;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -80,14 +77,14 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-prioridade-1 {
+.card-prioridade-1-tecnico {
   background-color: #4cc78b;
   width: 100%;
   border-radius: 20px 20px 0px 0;
   padding: 3px 10px 1px 10px;
 }
 
-.card-prioridade-1 p {
+.card-prioridade-1-tecnico p {
   background-color: #4cc78b;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -95,13 +92,13 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-titulo h3 {
+.card-titulo-tecnico h3 {
   color: #000;
   font-size: 22px;
   font-weight: 700;
 }
 
-.card-patrimonio {
+.card-patrimonio-tecnico {
   max-width: 98%;
   width: 82%;
   align-items: center;
@@ -109,7 +106,7 @@
   display: grid;
 }
 
-.card-patrimonio p {
+.card-patrimonio-tecnico p {
   color: #000;
   background-color: #fff;
   font-size: 15px;
@@ -117,7 +114,7 @@
   font-weight: 600;
 }
 
-.card-data {
+.card-data-tecnico {
   align-items: center;
   justify-content: center;
   display: flex;
@@ -125,25 +122,11 @@
   margin-top: 6px;
 }
 
-.card-data p {
+.card-data-tecnico p {
   font-size: 15px;
 }
 
-.card-descricao {
-  max-width: 85%;
-  padding-left: 12%;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  margin-top: 3px;
-
-}
-
-.card-descricao p {
-  font-size: 14px;
-}
-
-.card-atualizacao {
+.card-descricao-tecnico {
   max-width: 85%;
   padding-left: 12%;
   align-items: center;
@@ -152,11 +135,24 @@
   margin-top: 3px;
 }
 
-.card-atualizacao p {
+.card-descricao-tecnico p {
   font-size: 14px;
 }
 
-.card-tecnico {
+.card-atualizacao-tecnico {
+  max-width: 85%;
+  padding-left: 12%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-top: 3px;
+}
+
+.card-atualizacao-tecnico p {
+  font-size: 14px;
+}
+
+.card-tecnico-tecnico {
   font-family: "Montserrat", sans-serif;
   max-width: 85%;
   padding-left: 12%;
@@ -164,30 +160,24 @@
   justify-content: center;
   display: flex;
   margin-top: 3px;
-
 }
 
-.card-tecnico p {
-  font-size: 14px;
-}
-
-.status-card {
+.status-card-tecnico {
   margin-top: 5px;
   color: var(--vermelhoEscuro);
   font-size: 14px;
 }
 
-.chat {
+.chat-tecnico {
   width: 100%;
-
 }
 
-.chat input {
+.chat-tecnico input {
   border-radius: 15px;
   padding: 5px;
 }
 
-.btn-desativado {
+.btn-desativado-tecnico {
   margin-bottom: 10px;
   opacity: 0.4;
   pointer-events: none;
@@ -206,8 +196,6 @@
   border-radius: 15px;
 }
 
-
-
 .modal-content p {
   color: #000;
   font-size: 14px;
@@ -220,38 +208,82 @@
 
 .modal-content h2 {
   font-size: 23px;
-
 }
 
-.ficha {
-  width: 100%;
+.img-avatar-tecnico {
+  background-color: var(--vermelho);
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
 
+.img-avatar-tecnico p {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.nome-chat-tecnico {
+  font-size: 16px;
+  font-weight: 600;
+  margin-left: 10px;
+  color: var(--preto);
+  margin-top: 3.5px;
+}
+
+.ficha-tecnico {
+  width: 100%;
   margin-left: 5rem;
 }
 
-.modal-inicial {
+.modal-inicial-tecnico {
   margin-left: 38%;
 }
 
-.chat-container {
-  width: 30rem !important;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  margin-left: 10%;
+.chat-container-tecnico {
+  width: 100% !important;
+  height: 95%;
+  margin-left: 5%;
   overflow-x: hidden;
-  overflow-y: hidden;
 }
 
-.modal-header {
+.modal-header-tecnico {
   border-bottom: solid 1px var(--vermelhoMedio);
 }
 
-.modal-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  flex: auto  ;
+@media (max-width: 995px) {
+  .modal-lg {
+    max-width: 90% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-celular {
+    max-width: 100% !important;
+    display: block;
+  }
+
+  .modal-inicial-tecnico {
+    margin-left: 0;
+    margin-top: 2rem;
+  }
+
+  .chat-container-tecnico {
+    margin: 0;
+  }
+
+  .ficha-tecnico{
+    align-items: center;
+    justify-content: center;
+    display: grid;
+  }
+
+  .modal-content{
+    overflow-y: scroll !important;
+  }
+
 }

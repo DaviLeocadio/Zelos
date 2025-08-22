@@ -1,25 +1,37 @@
-import { listarMensagens, criarMensagens } from "../models/Chat.js";
+import { listarMensagens, criarMensagens } from '../models/Chat.js';
 
 const listarMensagensController = async (req, res) => {
-  const id = req.body.chamado_id;
+  const id = req.headers.chamado_id;
   try {
     const mensagens = await listarMensagens(id);
     res.status(200).json(mensagens);
   } catch (err) {
     console.error('Erro ao listar mensagens', err);
-    res.status(500).json({ mensagem: 'Erro ao listar mensagens' })
+    res.status(500).json({ mensagem: 'Erro ao listar mensagens' });
   }
-}
+};
 
 const criarMensagensController = async (req, res) => {
+  if (!req.usuarioId) {
+    return res.status(401).json({ mensagem: 'Usuário não autenticado' });
+  }
+
   try {
-    const { conteudo, cargo, chamado_id } = req.body;
- 
+    const { chamadoId, novoApontamento, usuario, tecnico } = req.body;
+    const pessoaMensagem = req.usuarioId;
+
     const chatData = {
-      conteudo: conteudo,
-      cargo: cargo,
-      chamado_id: chamado_id
+      chamado_id: chamadoId,
+      descricao: novoApontamento,
     };
+
+    if (usuario) {
+      chatData.usuario_id = pessoaMensagem;
+    } else if (tecnico) {
+      chatData.tecnico_id = pessoaMensagem;
+    }
+
+    console.log(chatData);
 
     const chatId = await criarMensagens(chatData);
     res.status(201).json({ mensagem: 'Chat criado com sucesso', chatId });
@@ -27,10 +39,6 @@ const criarMensagensController = async (req, res) => {
     console.error('Erro ao criar chat:', error);
     res.status(500).json({ mensagem: 'Erro ao criar chat' });
   }
-}
+};
 
-export { listarMensagensController, criarMensagensController }
-
-
-
-
+export { listarMensagensController, criarMensagensController };

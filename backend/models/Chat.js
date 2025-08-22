@@ -1,4 +1,4 @@
-import { create, readAll } from "../config/database.js";
+import { create, readAll } from '../config/database.js';
 
 const listarMensagens = async (chamado_id) => {
   try {
@@ -11,11 +11,11 @@ const listarMensagens = async (chamado_id) => {
 
 const criarMensagens = async (mensagemData) => {
   try {
-    return await create('mensagens', mensagemData);
+    return await create('apontamentos', mensagemData);
   } catch (error) {
     console.error('Erro ao criar mensagem:', error);
     throw error;
   }
 };
 
-export {criarMensagens, listarMensagens}
+export { criarMensagens, listarMensagens };

@@ -34,13 +34,15 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const Step = styled.div`
+const Step = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'active'
+})`
   display: flex;
   align-items: center;
   position: relative;
   i {
     font-size: 1.2rem;
-    color: ${(props) => (props.active ? '#FFFFFF' : '#FFFFFF')};
+    color: #FFFFFF;
     background-color: ${(props) => (props.active ? '#931c1b' : '#ccc')};
     border-radius: 50%;
     width: 2.5rem;
@@ -50,14 +52,11 @@ const Step = styled.div`
     text-align: center;
     display: flex;
   }
-  span {
-    display: block;
-    font-size: 0.75rem;
-    white-space: nowrap;
-  }
 `;
 
-const Bar = styled.div`
+const Bar = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'active'
+})`
   height: 0.4rem;
   width: 1rem;
   background-color: ${(props) => (props.active ? '#931c1b' : '#ccc')};

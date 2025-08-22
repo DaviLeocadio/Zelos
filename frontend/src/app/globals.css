@@ -1,9 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@519&display=swap');
-:root{
-  font-family: "Raleway", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 519;
-  font-style: normal;
+:root {
   --branco: #ffff;
   --vermelhoEscuro: #8e0009;
   --vermelhoMedio: #b5000c;
@@ -13,9 +8,6 @@
   --cinza: #eaeaea;
 }
 
-*{
-  font-family: "Raleway", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 519;
-  font-style: normal;
+body{
+  background-color: #eaeaea;
 }
