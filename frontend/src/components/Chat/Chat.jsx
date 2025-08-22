@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import './chat.css';
+import { getCookie } from 'cookies-next';
 
-export default function Chat({}) {
-  const [texto, setTexto] = useState('');
+export default function Chat({ idChamado }) {
   const [mensagens, setMensagens] = useState([]);
   const [carregandoMensagens, setCarregandoMensagens] = useState(true);
+  const [novoApontamento, setNovoApontamento] = useState('');
+  const [funcao, setFuncao] = useState('');
 
   const fimDasMensagensRef = (fim) => {
     if (fim) {
@@ -16,138 +17,138 @@ export default function Chat({}) {
     }
   };
 
-  useEffect(() => {
-    const mensagensSalvas = localStorage.getItem('chatbot-mensagens');
-    if (mensagensSalvas) {
-      try {
-        setMensagens(JSON.parse(mensagensSalvas));
-      } catch {
-        setMensagens([
-          {
-            autor: 'gemini',
-            texto:
-              'Chamado ainda não atendido!',
-          },
-        ]);
-      }
-    } else {
-      setMensagens([
-        {
-          autor: 'gemini',
-          texto:
-            'Olá! Sou a Vika, sua assistente virtual da Clínica Vida Plena. Como posso te ajudar hoje?',
+  async function carregarMensagens() {
+    try {
+      const res = await fetch('http://localhost:8080/chat', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          chamado_id: idChamado,
         },
-      ]);
+      });
+
+      if (!res.ok) {
+        setCarregandoMensagens(false);
+      }
+
+      const data = await res.json();
+      setMensagens(data);
+    } catch (err) {
+      console.error(err);
+      setMensagens([]);
+    } finally {
+      setCarregandoMensagens(false);
     }
-    setCarregandoMensagens(false);
+  }
+
+  useEffect(() => {
+    setCarregandoMensagens(true);
+    carregarMensagens();
+
+    const funcaoCookie = getCookie('funcao');
+    setFuncao(funcaoCookie);
   }, []);
 
-  useEffect(() => {
-    if (!carregandoMensagens && typeof window !== 'undefined') {
-      localStorage.setItem('chatbot-mensagens', JSON.stringify(mensagens));
-    }
-  }, [mensagens, carregandoMensagens]);
+  if (carregandoMensagens) {
+    return <p>Carregando mensagens...</p>;
+  }
 
-  async function enviarGemini() {
-    if (!texto.trim()) return;
+  async function mensagem() {
+    const token = getCookie('token');
 
-    const mensagemUsuario = { autor: 'user', texto };
-    setMensagens((anteriores) => [...anteriores, mensagemUsuario]);
-    setTexto('');
+    const dados = JSON.stringify({
+      chamadoId: idChamado,
+      novoApontamento,
+      usuario: funcao === 'usuario',
+      tecnico: funcao === 'tecnico',
+    });
 
     try {
-      const response = await fetch('http://localhost:3001/vika', {
+      const response = await fetch('http://localhost:8080/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
         },
-        body: JSON.stringify({
-          mensagem: texto,
-        }),
+        body: dados,
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        setMensagens((anteriores) => [
-          ...anteriores,
-          { autor: 'gemini', texto: data },
-        ]);
+        await carregarMensagens();
+        setNovoApontamento('');
       } else {
-        setMensagens((anteriores) => [
-          ...anteriores,
-          {
-            autor: 'gemini',
-            texto:
-              data.mensagem ||
-              'Desculpe ocorreu um erro e eu não posso te responder agora!',
-          },
-        ]);
+        // alert('errado');
       }
     } catch (error) {
       console.error('Erro:', error);
-      setMensagens((anteriores) => [
-        ...anteriores,
-        { autor: 'gemini', texto: 'Erro ao enviar os dados.' },
-      ]);
+      alert('Erro ao enviar os dados.');
     }
-  }
-
-  if (carregandoMensagens) {
-    return;
   }
 
   return (
     <>
-      <div className="offcanvas-body d-flex flex-column p-0 chat-container">
-        <div className="">
-          <div className="card-container">
-
-            <div className="card-body">
-              <div className="messages-container">
-                {mensagens.map((mensagem, chave) => (
-                  <div
-                    key={chave}
-                    className={`message-box ${mensagem.autor === 'user' ? 'right' : 'left'
+      <div className="">
+        <div className="card-container">
+          <div className="card-body">
+            <div className="messages-container">
+              {mensagens.map((mensagem, chave) => (
+                <div
+                  key={chave}
+                  className={`message-box ${
+                    (funcao === 'usuario' && mensagem.usuario_id) ||
+                    (funcao === 'tecnico' && !mensagem.usuario_id)
+                      ? 'right'
+                      : 'left'
+                  }`}
+                >
+                  <p className="titulo-msg">
+                    {mensagem.usuario_id ? 'Usuário' : 'Técnico'}
+                  </p>
+                  <p>{mensagem.descricao}</p>
+                  <div className="d-flex justify-content-between">
+                    <p
+                      className={`message-box ${
+                        mensagem.usuario_id ? 'hora-chat2' : 'hora-chat'
                       }`}
-                  >
-                    {mensagem.autor === `gemini` ? (
-                      <div className="markdown">
-                        <p>{mensagem.texto}</p>
-                      </div>
-                    ) : (
-                      <p>{mensagem.texto}</p>
-                    )}
+                    >
+                      {new Date(mensagem.criado_em).toLocaleTimeString(
+                        'pt-BR',
+                        {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        }
+                      )}
+                    </p>
+                    <p
+                      className={`message-box ${
+                        mensagem.usuario_id ? 'data-chat' : 'data-chat2'
+                      }`}
+                    >
+                      {new Date(mensagem.criado_em).toLocaleDateString('pt-BR')}
+                    </p>
                   </div>
-                ))}
-                <div ref={fimDasMensagensRef} />
-              </div>
+                </div>
+              ))}
+              <div ref={fimDasMensagensRef} />
             </div>
           </div>
         </div>
-        <div className="modal-footer d-flex border-top p-3">
-          <div className="d-flex w-100">
-            <input
-              type="text"
-              className="form-control input-nova-chat w-100"
-              placeholder="Digite sua mensagem..."
-              value={texto}
-              onChange={(e) => setTexto(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') enviarMensagem();
-              }}
-              required
-            />
-            <button
-              className="btn btn-modal-chat ms-2"
-              onClick={enviarGemini}
-            >
-              <i className="bi bi-arrow-right"></i>
-            </button>
-          </div>
-        </div>
       </div>
-
+      <div className="d-flex bottom-0">
+        <input
+          type="text"
+          className="form-control input-nova-chat w-100"
+          placeholder="Digite sua mensagem..."
+          value={novoApontamento}
+          onChange={(e) => setNovoApontamento(e.target.value)}
+          required
+        />
+        <button className="btn btn-modal-chat ms-2" onClick={mensagem}>
+          <i className="bi bi-arrow-right"></i>
+        </button>
+      </div>
     </>
   );
 }

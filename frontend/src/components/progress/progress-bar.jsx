@@ -4,6 +4,12 @@ import styled from 'styled-components';
 
 const ProgressBar = ({ step }) => {
   // step: 0 = não iniciado, 1 = em andamento, 2 = concluído
+  const status ={
+    'não iniciado': 0,
+    'em andamento': 1,
+    'concluído': 2,
+  }
+
   const steps = [
     { icon: 'bi-clock-history', label: 'Chamado não iniciado' },
     { icon: 'bi-wrench-adjustable', label: 'Em andamento' },
@@ -13,9 +19,9 @@ const ProgressBar = ({ step }) => {
   return (
     <Wrapper>
       {steps.map((s, index) => (
-        <Step key={index} active={step >= index}>
+        <Step key={index} active={status[step] >= index}>
           <i className={`bi ${s.icon}`}></i>
-          {index < steps.length - 1 && <Bar active={step > index} />}
+          {index < steps.length - 1 && <Bar active={status[step] > index} />}
         </Step>
       ))}
     </Wrapper>

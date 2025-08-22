@@ -1,6 +1,6 @@
 'use client';
 import "./meus_chamados.css";
-import Card from "@/components/CardUser/Card";
+import CardUser from "@/components/CardUser/Card";
 import BtnVenhaCriar from "@/components/BtnVenhaCriar/BtnVenhaCriar";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -8,43 +8,22 @@ import { useEffect, useState } from "react";
 export default function Meus_chamados() {
 
   const [chamados, setChamados] = useState([]);
-  const [tecnico, setTecnico] = useState();
+
 
   useEffect(() => {
-    const usuarioId = 5;
+    const usuarioId = 2;
     fetch("http://localhost:8080/chamados")
       .then((response) => response.json())
       .then((informacao) => {
         const chamadosUser = informacao.filter(
           (chamado) => chamado.usuario_id === usuarioId
         );
-        setChamados(chamadosUser);
-        
+        setChamados(chamadosUser)
+
       })
       .catch((error) => console.error('Erro ao buscar chamados:', error));
 
   }, []);
-
-  const fetchTecnico = async () => {
-    try {
-      const resTec = await fetch(
-        `http://localhost:8080/user/${id_tecnico}`
-      );
-      const tecnico = await resTec.json();
-      setTecnico(tecnico.nome);
-    }
-    catch {
-      setTecnico("Não definido");
-    }
-  };
-
-
-  const ordemPrioridade = {
-    '1': "Intervenção Preventiva",
-    '2': "Intervenção Sem Urgência",
-    '3': "Intervenção Prioritária",
-    '4': "Intervenção Imediata",
-  };
 
   const status = {
     'pendente': 0,
@@ -52,6 +31,21 @@ export default function Meus_chamados() {
     'concluído': 2,
   };
 
+
+  const ordenarChamados = () => {
+    return chamados.sort((a, b) => {
+      const statusA = status[a.status];
+      const statusB = status[b.status];
+
+      if (statusA === 2 && statusB !== 2) return 1;
+      if (statusB === 2 && statusA !== 2) return -1;
+
+      if (statusA !== 2 && statusB !== 2) {
+        return parseInt(b.grau_prioridade) - parseInt(a.grau_prioridade);
+      }
+      return 0;
+    });
+  }
 
   return (
     <>
@@ -68,72 +62,16 @@ export default function Meus_chamados() {
       {
         chamados.length > 0 ? (
           <>
-            <div className="cards  d-md-flex d-none gap-4 flex-wrap">
+            <div className="cards d-md-flex d-none gap-4 flex-wrap">
 
-              {chamados.sort((a, b) => {
-                const statusA = status[a.status];
-                const statusB = status[b.status];
-
-                if (statusA === 2 && statusB !== 2) return 1;
-                if (statusB === 2 && statusA !== 2) return -1;
-
-                if (statusA !== 2 && statusB !== 2) {
-                  return parseInt(b.grau_prioridade) - parseInt(a.grau_prioridade);
-                }
-                return 0;
-              }).map((chamado) => {
-                
-                return (
-                  <Card
-                    key={chamado.id}
-                    titulo={chamado.titulo}
-                    descricao={chamado.descricao}
-                    grau_prioridade={ordemPrioridade[chamado.grau_prioridade]}
-                    prioridade={chamado.grau_prioridade}
-                    patrimonio={chamado.patrimonio}
-                    status={chamado.status}
-                    tecnico={tecnico}
-                    atualizado_em={chamado.atualizado_em}
-                    criado_em={chamado.criado_em}
-                    id={chamado.id}
-                    tipo={chamado.tipo_id}
-                    usuario={chamado.usuario_id}
-                  />
-                )
-              })
-              }
+              {ordenarChamados(chamados).map((chamado) => (
+                <CardUser chamados={chamado} key={chamado.id} />
+              ))}
             </div>
             <div className="cards-celular mt-4 d-flex gap-4 align-items-center justify-content-center d-md-none flex-wrap">
-              {chamados.sort((a, b) => {
-                const statusA = status[a.status];
-                const statusB = status[b.status];
-
-                if (statusA === 2 && statusB !== 2) return 1;
-                if (statusB === 2 && statusA !== 2) return -1;
-
-                if (statusA !== 2 && statusB !== 2) {
-                  return parseInt(b.grau_prioridade) - parseInt(a.grau_prioridade);
-                }
-                return 0;
-              }).map((chamado) => {
-                return (
-                  <Card
-                    key={chamado.id}
-                    titulo={chamado.titulo}
-                    descricao={chamado.descricao}
-                    grau_prioridade={ordemPrioridade[chamado.grau_prioridade]}
-                    prioridade={chamado.grau_prioridade}
-                    patrimonio={chamado.patrimonio}
-                    status={chamado.status}
-                    tecnico={chamado.tecnico_id}
-                    atualizado_em={chamado.atualizado_em}
-                    criado_em={chamado.criado_em}
-                    id={chamado.id}
-                    tipo={chamado.tipo_id}
-                    usuario={chamado.usuario_id} />
-                )
-              })
-              }
+              {ordenarChamados(chamados).map((chamado) => (
+                <CardUser chamados={chamado} key={chamado.id} />
+              ))}
             </div>
           </>
         ) : (
@@ -141,7 +79,7 @@ export default function Meus_chamados() {
             <img src="/fundo_semChamados.png" alt="" />
             <div className="sem-chamados gap-3 d-none d-md-flex">
               <h2>Você não possui chamados registrados</h2>
-              
+
               <Link href={'/user/criar_chamado'} className="border-0 btnVenhaCriar">
                 <BtnVenhaCriar />
               </Link>
@@ -149,15 +87,15 @@ export default function Meus_chamados() {
             </div>
 
             <div className="d-grid mt-4 w-100 d-md-none justify-content-center align-items-center">
-            <img src="/fundo_semChamados.png" alt="" />
+              <img src="/fundo_semChamados.png" alt="" />
               <h2 className="fs-4">Você não possui chamados registrados</h2>
               <div className="align-items-center justify-content-center d-flex">
-            
+
                 <Link href={'/user/criar_chamado'} className="border-0 btnVenhaCriar">
-                <BtnVenhaCriar />
-              </Link>
+                  <BtnVenhaCriar />
+                </Link>
               </div>
-              
+
             </div>
           </div>
         )

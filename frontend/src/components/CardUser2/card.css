@@ -11,16 +11,18 @@
 
 }
 
-.card-user {
+.card {
   width: 15.3rem;
+  height: 55%;
   border-radius: 20px;
   border: 0;
   transition: all 0.2s ease-in-out;
   background-color: #fff !important;
 }
 
-.card-desativado-user {
+.card-desativado {
   width: 15.3rem;
+  height: 55%;
   border-radius: 20px;
   border: 0;
   transition: all 0.2s ease-in-out;
@@ -28,19 +30,19 @@
   background-color: #fff;
 }
 
-.card-user:hover {
+.card:hover {
   transform: translateY(-5);
   cursor: pointer;
 }
 
-.card-prioridade-4-user {
+.card-prioridade-4 {
   background-color: #d83d65;
   width: 100%;
   border-radius: 20px 20px 0px 0;
   padding: 3px 10px 1px 10px;
 }
 
-.card-prioridade-4-user p {
+.card-prioridade-4 p {
   background-color: #d83d65;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -48,14 +50,14 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-prioridade-3-user {
+.card-prioridade-3 {
   background-color: #417bd5;
   width: 100%;
   border-radius: 20px 20px 0px 0;
   padding: 3px 10px 1px 10px;
 }
 
-.card-prioridade-3-user p {
+.card-prioridade-3 p {
   background-color: #417bd5;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -63,14 +65,14 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-prioridade-2-user {
+.card-prioridade-2 {
   background-color: #ff9d59;
   width: 100%;
   border-radius: 20px 20px 0px 0;
   padding: 3px 10px 1px 10px;
 }
 
-.card-prioridade-2-user p {
+.card-prioridade-2 p {
   background-color: #ff9d59;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -78,14 +80,14 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-prioridade-1-user {
+.card-prioridade-1 {
   background-color: #4cc78b;
   width: 100%;
   border-radius: 20px 20px 0px 0;
   padding: 3px 10px 1px 10px;
 }
 
-.card-prioridade-1-user p {
+.card-prioridade-1 p {
   background-color: #4cc78b;
   margin-bottom: 1%;
   margin-top: 1%;
@@ -93,13 +95,13 @@
   font-family: "Montserrat", sans-serif !important;
 }
 
-.card-titulo-user h3 {
+.card-titulo h3 {
   color: #000;
   font-size: 22px;
   font-weight: 700;
 }
 
-.card-patrimonio-user {
+.card-patrimonio {
   max-width: 98%;
   width: 82%;
   align-items: center;
@@ -107,7 +109,7 @@
   display: grid;
 }
 
-.card-patrimonio-user p {
+.card-patrimonio p {
   color: #000;
   background-color: #fff;
   font-size: 15px;
@@ -115,7 +117,7 @@
   font-weight: 600;
 }
 
-.card-data-user {
+.card-data {
   align-items: center;
   justify-content: center;
   display: flex;
@@ -123,11 +125,11 @@
   margin-top: 6px;
 }
 
-.card-data-user p{
+.card-data p{
   font-size: 15px;
 }
 
-.card-descricao-user {
+.card-descricao {
   max-width: 85%;
   padding-left: 12%;
   align-items: center;
@@ -137,11 +139,11 @@
 
 }
 
-.card-descricao-user p {
+.card-descricao p {
   font-size: 14px;
 }
 
-.card-atualizacao-user {
+.card-atualizacao {
   max-width: 85%;
   padding-left: 12%;
   align-items: center;
@@ -150,11 +152,11 @@
   margin-top: 3px;
 }
 
-.card-atualizacao-user p {
+.card-atualizacao p {
   font-size: 14px;
 }
 
-.card-tecnico-user {
+.card-tecnico {
   font-family: "Montserrat", sans-serif;
   max-width: 85%;
   padding-left: 12%;
@@ -165,25 +167,27 @@
 
 }
 
+.card-tecnico p {
+  font-size: 14px;
+}
 
-
-.status-card-user {
+.status-card {
   margin-top: 5px;
   color: var(--vermelhoEscuro);
   font-size: 14px;
 }
 
-.chat-user {
+.chat {
   width: 100%;
 
 }
 
-.chat-user input {
+.chat input {
   border-radius: 15px;
   padding: 5px;
 }
 
-.btn-desativado-user {
+.btn-desativado {
   margin-bottom: 10px;
   opacity: 0.4;
   pointer-events: none;
@@ -219,60 +223,30 @@
 
 }
 
-.img-avatar-user {
-  background-color: var(--vermelho);
-  border-radius: 100%;
-  width: 30px;
-  height: 30px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-}
-
-.img-avatar-user p {
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 0;
-}
-
-.nome-chat-user{
-  font-size: 16px;
-  font-weight: 600;
-  margin-left: 10px;
-  color: var(--preto);
-  margin-top: 3.5px;
-}
-
-.ficha-user {
+.ficha {
   width: 100%;
+ 
   margin-left: 5rem;
 }
 
-.modal-inicial-user {
+.modal-inicial {
   margin-left: 38%;
 }
 
-.chat-container-user {
+.chat-container {
   width: 100% !important;
   height: 95%;
   margin-left: 5%;
   overflow-x: hidden;
 }
 
-.modal-header-user {
+.modal-header {
   border-bottom:solid 1px  var(--vermelhoMedio);
 }
 
-@media (max-width: 995px) {
-  .modal-lg {
-    max-width: 90% !important;
-  }
-}
+.line{
+  width: 100%;
+  height: 100%;
+  background-color: var(--preto);
 
-@media (max-width: 768px) {
-  .modal-celular {
-    max-width: 100% !important;
-    display: block;
-  }
 }

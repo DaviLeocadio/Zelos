@@ -1,10 +1,11 @@
+'use client';
 import React from "react";
 import styled from "styled-components";
 
 const Button = () => {
   return (
     <StyledWrapper>
-      <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasChatBot">
+      <div className="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasChatBot">
         <div className="svg-wrapper-1">
           <div className="svg-wrapper">
             <svg
@@ -22,13 +23,13 @@ const Button = () => {
           </div>
         </div>
         <span className="fs-6">Ver Mais</span>
-      </button>
+      </div>
     </StyledWrapper>
   );
 };
 
 const StyledWrapper = styled.div`
-  button {
+  .button {
     font-family: inherit;
     font-size: 20px;
     background: #b5000c;
@@ -44,31 +45,31 @@ const StyledWrapper = styled.div`
     cursor: pointer;
   }
 
-  button span {
+  .button span {
     display: block;
     margin-left: 0.3em;
     transition: all 0.3s ease-in-out;
   }
 
-  button svg {
+  .button svg {
     display: block;
     transform-origin: center center;
     transition: transform 0.3s ease-in-out;
   }
 
-  button:hover .svg-wrapper {
+  .button:hover .svg-wrapper {
     animation: fly-1 0.6s ease-in-out infinite alternate;
   }
 
-  button:hover svg {
+  .button:hover svg {
     transform: translateX(1.6em) rotate(45deg) scale(1.1);
   }
 
-  button:hover span {
+  .button:hover span {
     transform: translateX(7em);
   }
 
-  button:active {
+  .button:active {
     transform: scale(0.95);
   }
 
