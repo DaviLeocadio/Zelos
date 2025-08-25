@@ -21,6 +21,12 @@ export default function Meus_chamados() {
       .catch((error) => console.error("Erro ao buscar chamados:", error));
   }, []);
 
+  const status ={
+    "procurando responsável": 0,
+    "em andamento": 1,
+    "concluído": 2,
+  }
+
     const ordenarChamados = () => {
     return chamados.sort((a, b) => {
       const statusA = status[a.status];

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import "./chamados.css";
-import CardUser from "@/components/Card/CardUser";
+import CardUser from "@/components/Card/CardTecnico";
 import BtnVenhaCriar from "@/components/BtnVenhaCriar/BtnVenhaCriar";
 
 export default function Meus_chamados() {

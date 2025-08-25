@@ -1,5 +1,5 @@
 "use client";
-import "./cardUser.css";
+import "./cardTecnico.css";
 import React, { useEffect, useState } from "react";
 import BtnChat from "@/components/BtnChatUser/Btnchat";
 import Chat from "@/components/Chat/Chat.jsx";
@@ -8,11 +8,34 @@ import { getCookie } from "cookies-next";
 
 export default function Carrosel({ chamados = [] }) {
   const [funcao, setFuncao] = useState("");
+  const [chamadosTecnico, setChamadosTecnico] = useState(Array.isArray(chamados) ? chamados : []);
+
 
   useEffect(() => {
     const funcaoCookie = getCookie("funcao");
     setFuncao(funcaoCookie);
   }, []);
+
+  useEffect(() => {
+    setChamadosTecnico(Array.isArray(chamados) ? chamados : []);
+  }, [chamados]);
+
+
+  const handleStatusChange = (id, novoStatusIndex) => {
+    const statusLabels = ["procurando responsável", "em andamento", "concluído"];
+
+    setChamadosTecnico((prev) =>
+      prev.map((c) =>
+        c.id === id ? { ...c, status: statusLabels[novoStatusIndex] } : c
+      )
+    );
+    fetch(`http://localhost:8080/chamados/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: statusLabels[novoStatusIndex] }),
+    });
+    window.location.reload();
+  };
 
   const nomePerfil = "Davi Leocadio";
   const partes = nomePerfil.trim().split(" ");
@@ -35,9 +58,8 @@ export default function Carrosel({ chamados = [] }) {
         return (
           <div key={chamado.id}>
             <div
-              className={`${
-                isConcluido ? "card-desativado-tecnico" : "card-tecnico"
-              } d-flex flex-column align-items-center justify-content-center`}
+              className={`${isConcluido ? "card-desativado-tecnico" : "card-tecnico"
+                } d-flex flex-column align-items-center justify-content-center`}
               key={chamado.id}
             >
               <div
@@ -63,15 +85,18 @@ export default function Carrosel({ chamados = [] }) {
                   <p>{chamado.status}</p>
                 </div>
                 <div className="">
-                  <Progress step={chamado.status} />
+                  <Progress
+                    step={chamado.status}
+                    onChange={(novoIndex) => handleStatusChange(chamado.id, novoIndex)}
+                    funcao={'técnico'}
+                  />
                 </div>
               </main>
 
               <button
                 type="button"
-                className={`btn ${
-                  isConcluido ? "btn-desativado" : ""
-                } mt-2 mb-3`}
+                className={`btn ${isConcluido ? "btn-desativado" : ""
+                  } mt-2 mb-3`}
                 data-bs-toggle="modal"
                 data-bs-target={`#modal-${chamado.id}`}
               >
@@ -93,7 +118,7 @@ export default function Carrosel({ chamados = [] }) {
                     <h2 className="modal-title" id={`modalLabel-${chamado.id}`}>
                       <b>Ficha Técnica:</b>
                     </h2>
-                    <div className="modal-inicial-user d-md-grid d-none sticky-top bg-white">
+                    <div className="modal-inicial-tecnico d-md-grid d-none sticky-top bg-white">
                       <div className="d-flex">
                         <div className="img-avatar-tecnico">
                           <p>{iniciais}</p>

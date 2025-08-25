@@ -93,7 +93,7 @@ export default function Chat({ idChamado }) {
         <div className="card-container">
           <div className="card-body">
             <div className="messages-container">
-              {mensagens.map((mensagem, chave) => (
+              {Array(mensagens).map((mensagem, chave) => (
                 <div
                   key={chave}
                   className={`message-box ${

@@ -9,6 +9,35 @@
   export default function Carrosel({ chamados = [] }) {
     const [funcao, setFuncao] = useState("");
 
+  // useEffect(() => {
+  //   const funcaoCookie = getCookie("funcao");
+  //   setFuncao(funcaoCookie);
+  // });
+
+  // async function atribuirTecnico(idChamado) {
+  //   const cookieJWT = getCookie("token");
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:8080/criarchamado/${idChamado}`,
+  //       {
+  //         method: "PUT",
+  //         headers: {
+  //           Authorization: "Bearer " + cookieJWT,
+  //         },
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     console.log(data);
+
+  //     if (response.ok) {
+  //       alert("Chamado atribuído com sucesso");
+  //     } else {
+  //       alert("Erro ao atribuir chamado");
+  //     }
+  //   } catch {
+  //     alert("Erro ao enviar dados");
+  //   }
+  // }
     useEffect(() => {
       const funcaoCookie = getCookie("funcao");
       setFuncao(funcaoCookie);
@@ -63,7 +92,7 @@
                     <p>{chamado.status}</p>
                   </div>
                   <div className="">
-                    <Progress step={chamado.status} />
+                    <Progress step={chamado.status} funcao={'user'} />
                   </div>
                 </main>
 
